@@ -2,11 +2,7 @@ package com.example.mis4203movilvinilosjpc.ActivityPrincipal.UI.View.Tabs
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PageSize
-import androidx.compose.foundation.pager.PagerDefaults
-import androidx.compose.foundation.pager.PagerScope
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Tab
@@ -15,14 +11,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.tabsItems
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.UI.ViewModel.ActivityPrincipalViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TabsContent() {
+fun TabsContent(navController: NavController) {
     val tabs = listOf(
         tabsItems.Album,
         tabsItems.Artista,
@@ -36,17 +33,17 @@ fun TabsContent() {
         tabs.size}
     Column {
         Tabs(pagerState = pagerState, tabs = tabs)
-        contents(pagerState = pagerState, tabs = tabs)
+        Contents(pagerState = pagerState, tabs = tabs,navController = navController)
     }
 }
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun contents(pagerState: PagerState, tabs: List<tabsItems>) {
+fun Contents(pagerState: PagerState, tabs: List<tabsItems>,navController: NavController) {
     HorizontalPager(
         state = pagerState,
     )
     {page ->
-        tabs[page].screem()
+        tabs[page].screem(navController)
 
     }
 }
@@ -65,6 +62,7 @@ fun Tabs(pagerState: PagerState, tabs: List<tabsItems>) {
                 onClick = {
                    scope.launch {
                        pagerState.animateScrollToPage(index)
+
                    }
 
                 },
