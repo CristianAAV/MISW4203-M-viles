@@ -3,7 +3,8 @@ package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.View.AlbumContent
-import com.example.mis4203movilvinilosjpc.ActivityPrincipal.UI.ViewModel.ActivityPrincipalViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.AlbumsViewModel
+
 
 typealias composablefun = @Composable (NavController) -> Unit
 
@@ -19,9 +20,9 @@ sealed class tabsItems(
     })
 
     object Artista : tabsItems("Artista", {
-        ActivityPrincipalViewModel().titleChange("Artista")
+
     })
     object Coleccionista : tabsItems("Coleccionista", {
-        ActivityPrincipalViewModel().titleChange("Coleccionista")
+
     })
 }
