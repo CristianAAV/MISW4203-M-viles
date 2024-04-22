@@ -50,8 +50,10 @@ android {
 }
 
 dependencies {
+
     val lifecycle_version = "2.7.0"
     val arch_version = "2.2.0"
+    val room_version = "2.6.1"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -77,9 +79,19 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
     // LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation ("androidx.compose.runtime:runtime-livedata:1.6.6")
     // Lifecycles only (without ViewModel or LiveData)
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
     // Lifecycle utilities for Compose
     implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version")
-
+    //room
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    //convertergson
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    //imagenes de la web
+    implementation("io.coil-kt:coil-compose:2.6.0")
 }

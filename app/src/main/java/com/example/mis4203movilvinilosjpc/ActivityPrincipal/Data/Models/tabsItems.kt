@@ -1,19 +1,27 @@
 package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import com.example.mis4203movilvinilosjpc.ActivityPrincipal.UI.View.Tabs.AlbumContent
+import androidx.navigation.NavController
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.View.AlbumContent
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.UI.ViewModel.ActivityPrincipalViewModel
 
-typealias composablefun = @Composable () -> Unit
+typealias composablefun = @Composable (NavController) -> Unit
 
 sealed class tabsItems(
-    var title : String,
-    var screem : composablefun
+    var title: String,
+    var screem: composablefun
+
 ) {
-    object Album: tabsItems("Album",{
-        AlbumContent()
+    object Album : tabsItems("Album", {
+
+        AlbumContent(albumsViewModel = AlbumsViewModel(), navController = it)
+
     })
-    object Artista: tabsItems("Artista",{})
-    object Coleccionista: tabsItems("Coleccionista",{})
+
+    object Artista : tabsItems("Artista", {
+        ActivityPrincipalViewModel().titleChange("Artista")
+    })
+    object Coleccionista : tabsItems("Coleccionista", {
+        ActivityPrincipalViewModel().titleChange("Coleccionista")
+    })
 }
