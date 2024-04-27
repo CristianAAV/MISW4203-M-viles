@@ -138,21 +138,35 @@ npm init wdio .
 ===============================
 
 ? Continue with Appium setup using appium-installer (https://github.com/AppiumTestDistribution/appium-installer)? Yes ##Directorio y nombre del proyecto de pruebas
+
 ? Where is your automation backend located? On my local machine ##Ejecucion del backend en local
+
 ? Which environment you would like to automate? Mobile - native, hybrid and mobile web apps, on Android or iOS ## Tipo de aplicacion
+
 ? Which mobile environment you'ld like to automate? Android - native, hybrid and mobile web apps, tested on emulators ## Sistema de la aplicacion
 and real devices
+
   |> using UiAutomator2 (https://www.npmjs.com/package/appium-uiautomator2-driver)
+  
 ? Which framework do you want to use? Mocha (https://mochajs.org/) ## Framework de pruebas
+
 ? Do you want to use a compiler? No! ## Uso de compilador
+
 ? Do you want WebdriverIO to autogenerate some test files? No ##Autogenerar archivos de test.
+
 ? Which reporter do you want to use? spec ## Tipo de reportes.
+
 ? Do you want to add a plugin to your test setup? ## sin plugins 
+
 ? Would you like to include Visual Testing to your setup? For more information see
 https://webdriver.io/docs/visual-testing! No
+
 ? Do you want to add a service to your test setup? appium ## Servicio de pruebas Appium
+
 Need to install the following packages: ## Instalacion de dependencias.
+
 appium-installer@3.0.0
+
 Ok to proceed? (y) y 
 
 Algo asi debe ser
