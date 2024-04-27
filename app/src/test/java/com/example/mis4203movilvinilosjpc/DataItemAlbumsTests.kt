@@ -31,4 +31,17 @@ class DataItemAlbumsTests {
         assertEquals("Rock", album.genre)
         assertEquals("RecordLabel", album.recordLabel)
     }
+
+    @Test
+    fun testTrack() {
+        val track = Track(
+            id = 1,
+            name = "TrackName",
+            duration = "3:45"
+        )
+
+        assertEquals(1, track.id)
+        assertEquals("TrackName", track.name)
+        assertEquals("3:45", track.duration)
+    }    
 }
