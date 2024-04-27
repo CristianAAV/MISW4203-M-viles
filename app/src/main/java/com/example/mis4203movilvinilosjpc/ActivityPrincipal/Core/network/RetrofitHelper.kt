@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitHelper {
     fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://vynils-back-heroku.herokuapp.com/")
+            .baseUrl("http://161.132.40.204/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
