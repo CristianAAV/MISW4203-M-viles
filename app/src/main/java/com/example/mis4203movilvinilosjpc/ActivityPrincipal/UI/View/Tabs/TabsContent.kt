@@ -12,14 +12,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.AlbumsViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.tabsItems
-import com.example.mis4203movilvinilosjpc.ActivityPrincipal.UI.ViewModel.ActivityPrincipalViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun TabsContent(navController: NavController) {
+fun TabsContent(
+    navController: NavController,
+    albumsViewModel: AlbumsViewModel) {
     val tabs = listOf(
         tabsItems.Album,
         tabsItems.Artista,
@@ -30,27 +33,47 @@ fun TabsContent(navController: NavController) {
         initialPageOffsetFraction = 0f
     ) {
         // provide pageCount
-        tabs.size}
+        tabs.size
+    }
     Column {
-        Tabs(pagerState = pagerState, tabs = tabs)
-        Contents(pagerState = pagerState, tabs = tabs,navController = navController)
+        Tabs(
+            pagerState = pagerState,
+            tabs = tabs,
+
+        )
+        Contents(
+            pagerState = pagerState,
+            tabs = tabs,
+            navController = navController,
+            albumsViewModel = albumsViewModel
+        )
     }
 }
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Contents(pagerState: PagerState, tabs: List<tabsItems>,navController: NavController) {
+fun Contents(
+    pagerState: PagerState,
+    tabs: List<tabsItems>,
+    navController: NavController,
+    albumsViewModel: AlbumsViewModel,
+) {
     HorizontalPager(
         state = pagerState,
     )
-    {page ->
-        tabs[page].screem(navController)
+    { page ->
+        tabs[page].screem(navController, albumsViewModel)
 
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Tabs(pagerState: PagerState, tabs: List<tabsItems>) {
+fun Tabs(
+    pagerState: PagerState,
+    tabs: List<tabsItems>
+
+    ) {
     val scope = rememberCoroutineScope() // corrutina para cargar las imagenes de cada tabs
     TabRow(
         selectedTabIndex = pagerState.currentPage,
@@ -60,15 +83,17 @@ fun Tabs(pagerState: PagerState, tabs: List<tabsItems>) {
             Tab(
                 selected = pagerState.currentPage == index,
                 onClick = {
-                   scope.launch {
-                       pagerState.animateScrollToPage(index)
+                    scope.launch {
+                        pagerState.animateScrollToPage(index)
 
-                   }
+                    }
 
                 },
                 text = {
-                    Text(text = tab.title,
-                        fontSize = 15.sp)
+                    Text(
+                        text = tab.title,
+                        fontSize = 15.sp
+                    )
                 }
             )
         }
