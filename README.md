@@ -134,9 +134,9 @@ npm init wdio .
 ```
 2- Usando el Asistente de configuración de WDIO, seleccione las opciones que desea seleccionar. En este caso se uso:
 
-===============================
 🤖 WDIO Configuration Wizard 🧙
 ===============================
+
 ? Continue with Appium setup using appium-installer (https://github.com/AppiumTestDistribution/appium-installer)? Yes ##Directorio y nombre del proyecto de pruebas
 ? Where is your automation backend located? On my local machine ##Ejecucion del backend en local
 ? Which environment you would like to automate? Mobile - native, hybrid and mobile web apps, on Android or iOS ## Tipo de aplicacion
