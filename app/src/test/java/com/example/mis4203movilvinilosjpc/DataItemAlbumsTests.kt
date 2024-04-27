@@ -43,5 +43,23 @@ class DataItemAlbumsTests {
         assertEquals(1, track.id)
         assertEquals("TrackName", track.name)
         assertEquals("3:45", track.duration)
-    }    
+    }
+
+    @Test
+    fun testPerformer() {
+        val performer = Performer(
+            id = 1,
+            name = "PerformerName",
+            image = "ImageURL",
+            description = "PerformerDescription",
+            birthDate = Date()
+        )
+
+        assertEquals(1, performer.id)
+        assertEquals("PerformerName", performer.name)
+        assertEquals("ImageURL", performer.image)
+        assertEquals("PerformerDescription", performer.description)
+        // Add assertions for birthDate if required
+    }
+
 }
