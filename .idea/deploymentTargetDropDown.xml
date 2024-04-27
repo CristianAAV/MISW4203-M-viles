@@ -5,7 +5,13 @@
       <entry key="GreetingPreview">
         <State />
       </entry>
+      <entry key="MainActivityTest">
+        <State />
+      </entry>
       <entry key="app">
+        <State />
+      </entry>
+      <entry key="testApp()">
         <State />
       </entry>
     </value>
