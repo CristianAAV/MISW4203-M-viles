@@ -61,5 +61,17 @@ class DataItemAlbumsTests {
         assertEquals("PerformerDescription", performer.description)
         // Add assertions for birthDate if required
     }
+    @Test
+    fun testComment() {
+        val comment = Comment(
+            id = 1,
+            description = "CommentDescription",
+            rating = 5
+        )
+
+        assertEquals(1, comment.id)
+        assertEquals("CommentDescription", comment.description)
+        assertEquals(5, comment.rating)
+    }
 
 }
