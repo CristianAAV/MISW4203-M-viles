@@ -269,12 +269,17 @@ desarrollador en su dispositivo android, activar la instalacion de APKS e instal
 app-debug.apk, te crea una aplicacion llamada mis4203movilvinilosjpc. la puedes abrir y disfrutar de
 la aplicacion.
 
-##Ejecucion de pruebas unitarias
-En Android Studio, navega hasta `app/src/test/java/com/example/mis4203movilvinilosjpc`, haz clic derecho sobre este folder y selecciona "Run Test" tal como se ejemplifica en la siguiente imagen:
+## Ejecución de pruebas unitarias
+
+En Android Studio, navega hasta `app/src/test/java/com/example/mis4203movilvinilosjpc`, haz clic derecho sobre este folder y selecciona "Run Test", tal como se ejemplifica en la siguiente imagen:
 
 ![Ejecutar pruebas unitarias](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142238841/a3da41ca-1939-4ba9-bc71-e87ec924b441)
 
-Esto sería suficiente para ejecutar los test unitarios del aplicativo.
+Esto sería suficiente para ejecutar los test unitarios del aplicativo. Del resultado de esta acción, se esperaría lo siguiente:
+
+![Resultado de las pruebas unitarias](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142238841/dd54dc8d-2c3d-465e-9762-eff45b6ca54e)
+
+
 
 
 
