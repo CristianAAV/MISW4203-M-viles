@@ -22,6 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -83,9 +85,11 @@ fun AlbumInformation(
             textAlign = TextAlign.Center,
             fontSize = 25.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.testTag("titleAlbum")
-
+            modifier = Modifier
+                .testTag("titleAlbum")
+                .semantics { contentDescription = "titleAlbum" }
         )
+
         //Nombre del artista o banda
         album.performers.forEach { performer ->
             Text(

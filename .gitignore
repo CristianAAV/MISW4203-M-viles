@@ -13,5 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
-/app/src/test/node_modules/*
-/app/src/test/node_modules
+/app/src/androidTest/node_modules/*
+/app/src/androidTest/node_modules
