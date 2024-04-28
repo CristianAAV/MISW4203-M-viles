@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -40,6 +42,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -122,8 +125,11 @@ fun DetalleAlbumUI(
         //Imagen del album
         AsyncImage(
             model = coverUrl,
-            contentDescription = null, // Agregar descripción accesible
+            contentDescription = "imagen del album detail", // Agregar descripción accesible
             modifier = modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+                .size(200.dp,200.dp)
                 .fillMaxWidth()
                 .clip(RectangleShape)
                 .padding(8.dp),
@@ -140,7 +146,7 @@ fun DetalleAlbumUI(
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         modifier = modifier
-            .padding(8.dp)
+            .padding(8.dp).testTag("titleAlbumDetail")
     )
 }
 
@@ -185,9 +191,11 @@ private fun AlbumArtist(performers: List<Performer>, modifier: Modifier = Modifi
         Text(
             text = "Artista:",
             fontWeight = FontWeight.Bold
+
         )
         performers.forEach { performer ->
-            Text(performer.name)
+            Text(performer.name,
+                modifier = Modifier.testTag("performansAlbumsDetail"))
         }
     }
 }
@@ -200,7 +208,8 @@ fun AlbumGenre(genre: String, modifier: Modifier) {
             text = "Género:",
             fontWeight = FontWeight.Bold
         )
-        Text(genre)
+        Text(genre,
+            modifier = Modifier.testTag("generoAlbumsDetail"))
     }
 
 }
@@ -213,7 +222,8 @@ private fun AlbumTracks(tracks: List<Track>, modifier: Modifier = Modifier) {
             fontWeight = FontWeight.Bold
         )
         tracks.forEachIndexed { index, track ->
-            Text(text = "${index + 1}. ${track.name}")
+            Text(text = "${index + 1}. ${track.name}",
+                modifier = Modifier.testTag("singAlbumsDetail"))
         }
     }
 }
@@ -230,7 +240,8 @@ private fun AlbumReleaseDate(
             fontWeight = FontWeight.Bold
         )
         val formattedDate = albumsViewModel.formatReleaseDate(releaseDate)
-        Text(formattedDate)
+        Text(formattedDate,
+            modifier = Modifier.testTag("dateAlbumsDetail"))
     }
 }
 
@@ -265,7 +276,8 @@ private fun CommentSection(
                         } else {
                             albumsViewModel.hideKeyboard()
                         }
-                    },
+                    }
+                    .testTag("textFieldcomentAlbumsDetail"),
                 keyboardActions = KeyboardActions(onDone = {
                     albumsViewModel.hideKeyboard()
                 }),
@@ -273,9 +285,10 @@ private fun CommentSection(
             )
             Button(
                 onClick = { /* Implementar lógica de envío de comentario */ },
-                modifier = Modifier.align(Alignment.End)
+                modifier = Modifier.align(Alignment.End).testTag("btnComentAlbumsDetail")
             ) {
-                Text("Enviar")
+                Text("Enviar",
+                    modifier = Modifier.testTag("textBtnComentAlbumsDetail"))
             }
             AlbumComments(album.comments)
         }
@@ -303,6 +316,7 @@ private fun AlbumComments(comments: List<Comment>, modifier: Modifier = Modifier
             Text(
                 text = "${index + 1}. ${comment.description}",
                 modifier = Modifier.padding(8.dp)
+                    .testTag("commentAlbumsDetail")
             )
         }
     }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,7 +19,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -54,10 +57,8 @@ fun AlbumCard(
             AlbumCover(
                 coverUrl = album.cover,
                 modifier = Modifier
+                    .size(90.dp)
                     .weight(0.5f)
-                    .size(80.dp)
-                    .clip(CircleShape)
-                    .border(1.dp, Color.Blue, CircleShape)
                     .padding(end = 4.dp)
             )
         }
@@ -81,19 +82,22 @@ fun AlbumInformation(
             text = album.name,
             textAlign = TextAlign.Center,
             fontSize = 25.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.testTag("titleAlbum")
+
         )
         //Nombre del artista o banda
         album.performers.forEach { performer ->
             Text(
                 text = performer.name,
                 textAlign = TextAlign.Center,
-                fontSize = 15.sp
+                fontSize = 15.sp,
+                modifier = Modifier.testTag("performansAlbum")
             )
         }
         //Boton para ver el detalle
-        Button(onClick = onDetailsClick) {
-            Text(text = "Detalles")
+        Button(onClick = onDetailsClick,modifier = Modifier.testTag("btnAlbum")) {
+            Text(text = "Detalles",modifier = Modifier.testTag("btnTextAlbum"))
         }
     }
 }
@@ -109,10 +113,11 @@ fun AlbumCover(
         model = coverUrl,
         contentDescription = "Portada del álbum",
         contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .size(80.dp)
+        modifier = modifier
+            .aspectRatio(1f, matchHeightConstraintsFirst = true)
             .clip(CircleShape)
-            .border(1.dp, Color.Blue, CircleShape)
+            .border(1.dp, color = Color.Blue, shape = CircleShape)
             .padding(end = 4.dp)
+            .testTag("imagenAlbum")
     )
 }
