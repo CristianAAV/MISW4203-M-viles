@@ -107,6 +107,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
     //test mokitop
     testImplementation ("org.mockito:mockito-core:3.11.2")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+    testImplementation("org.mockito:mockito-inline:2.13.0")
 }
 // Allow references to generated code
 kapt {
