@@ -39,4 +39,15 @@ class AlbumsRepositoryTest {
             assertEquals(mockAlbum, album)
         }
     }
+
+    
+    @Test
+    fun `getAlbumsFlow should return empty list`() = runBlockingTest {
+        whenever(mockAlbumsService.getAlbumsFlow()).thenReturn(flow { emit(emptyList()) })
+        val albumsFlow = albumsRepository.getAlbumsFlow()
+        albumsFlow.collect { albums ->
+            assertEquals(emptyList<DataItemAlbums>(), albums)
+        }
+    }
+
 }
