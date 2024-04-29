@@ -50,4 +50,32 @@ class AlbumsRepositoryTest {
         }
     }
 
+    @Test
+    fun `all albums should have specified properties`() = runBlockingTest {
+        // Mock album list with albums having specified properties
+        val mockAlbumList = listOf(
+            DataItemAlbums("1", "Album 1", "CoverURL1", "2024-04-26", "AlbumDescription1", "Rock1", "RecordLabel1"),
+            DataItemAlbums("2", "Album 2", "CoverURL2", "2024-04-27", "AlbumDescription2", "Rock2", "RecordLabel2"),
+            DataItemAlbums("3", "Album 3", "CoverURL3", "2024-04-28", "AlbumDescription3", "Rock3", "RecordLabel3")
+        )
+        whenever(mockAlbumsService.getAlbumsFlow()).thenReturn(flow { emit(mockAlbumList) })
+
+        val albumsFlow = albumsRepository.getAlbumsFlow()
+        albumsFlow.collect { albums ->
+            // Verify that all albums have specified properties
+            albums.forEachIndexed { index, album ->
+                assertEquals(mockAlbumList[index].id, album.id)
+                assertEquals(mockAlbumList[index].name, album.name)
+                assertEquals(mockAlbumList[index].cover, album.cover)
+                assertEquals(mockAlbumList[index].releaseDate, album.releaseDate)
+                assertEquals(mockAlbumList[index].description, album.description)
+                assertEquals(mockAlbumList[index].genre, album.genre)
+                assertEquals(mockAlbumList[index].recordLabel, album.recordLabel)
+            }
+        }
+    }
+
+
+
+
 }
