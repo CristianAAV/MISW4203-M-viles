@@ -22,6 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -83,7 +85,9 @@ fun AlbumInformation(
             textAlign = TextAlign.Center,
             fontSize = 25.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.testTag("titleAlbum")
+            modifier = Modifier
+                .testTag("albumTitle")
+                .semantics { contentDescription = "albumTitle" }
 
         )
         //Nombre del artista o banda
@@ -92,12 +96,19 @@ fun AlbumInformation(
                 text = performer.name,
                 textAlign = TextAlign.Center,
                 fontSize = 15.sp,
-                modifier = Modifier.testTag("performansAlbum")
+                modifier = Modifier
+                    .testTag("albumPerformers")
+                    .semantics { contentDescription = "albumPerformers" }
             )
         }
         //Boton para ver el detalle
-        Button(onClick = onDetailsClick,modifier = Modifier.testTag("btnAlbum")) {
-            Text(text = "Detalles",modifier = Modifier.testTag("btnTextAlbum"))
+        Button(onClick = onDetailsClick,modifier = Modifier
+            .testTag("btnAlbum")
+            .semantics { contentDescription = "btnAlbum" })
+        {
+            Text(text = "Detalles",modifier = Modifier
+                .testTag("btnTextAlbum")
+                .semantics { contentDescription = "btnTextAlbum" })
         }
     }
 }
