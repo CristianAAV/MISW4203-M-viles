@@ -280,8 +280,28 @@ Esto sería suficiente para ejecutar los test unitarios del aplicativo. Del resu
 ![Resultado de las pruebas unitarias](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142238841/dd54dc8d-2c3d-465e-9762-eff45b6ca54e)
 
 
+## Ejecución de pruebas e2e
+[Video de pruebas](https://youtu.be/QRcpWYVfITg)
 
+Para la ejecucion de las pruebas e2e se debe ingresar a la carpeta `MISW4203-Moviles-Vinilos\app\src\androidTest`
+dentro de la carpeta abrimos un CMD y ejecutamos el comando `npm install`.
+despues de que termine la instalacion validamos los pasos de configuracion del WDIO. segun las especificaciones de los dispositvos que tenga creados o que debe crear en su android studio.
+cambiar la version del android y el deviceName segun sus los parametros de configuracion que tengan y guardar los cambios.
 
+```wdio.conf.js
+capabilities: [{
 
+        platformName: "Android",
+        "appium:deviceName": "8 Pixel",
+        "appium:platformVersion": "11",
+        "appium:automationName": "UIAutomator2",
+        "appium:app":androidAppPath,
+        
+    }]
+```
 
+una vez realizado esto se inicia el dispositivo y se deja corriendo sin la aplicacion, y se ejecuta el siguiente comando para la ejecucion de las pruebas.
 
+```
+npx wdio
+```
