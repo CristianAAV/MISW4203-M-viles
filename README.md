@@ -175,9 +175,11 @@ Algo asi debe ser
 * Una ves finalizado la instalacion de dependecias seleccionar exit. 
 
 
-* Instala Appium en tu proyecto
+* Instala Appium, Appium-service y otras dependencias en tu proyecto
 ```bash
 npm install --save-dev appium@next
+npm install @wdio/appium-service --save-dev
+npm install chai --save-dev
 ```
 
 
