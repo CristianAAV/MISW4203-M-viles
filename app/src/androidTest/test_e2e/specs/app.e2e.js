@@ -2,11 +2,13 @@
   import { assert } from 'chai'
   describe("title app",() => {
     beforeEach (async () =>{
+
     await browser.pause(2000); // Espera 1 segundo (1000 milisegundos)
     await $('//android.widget.TextView[@text="Artistas"]').click();
     await browser.pause(2000); // Espera 1 segundo (1000 milisegundos)
     await $('//android.widget.TextView[@text="Albums"]').click();
     await browser.pause(2000); // Espera 1 segundo (1000 milisegundos)
+
     },{ shortCircuit: true });
 
 
@@ -18,6 +20,7 @@
       const titleText = await titleElement.getText();
       assert.isNotEmpty(titleText, 'Vinilos');
     });
+
 
       it('should display the album title on the screen', async function() {
           const titleElement = await $('//android.widget.TextView[@content-desc="albumTitle"]');
