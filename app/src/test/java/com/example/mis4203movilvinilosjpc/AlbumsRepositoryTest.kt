@@ -29,4 +29,14 @@ class AlbumsRepositoryTest {
         }
     }
 
+    @Test
+    fun `getAlbumFlow should return single album`() = runBlockingTest {
+        val albumId = "1"
+        val mockAlbum = DataItemAlbums(albumId, "Album 1")
+        whenever(mockAlbumsService.getAlbumFlow(albumId)).thenReturn(flow { emit(mockAlbum) })
+        val albumFlow = albumsRepository.getAlbumFlow(albumId)
+        albumFlow.collect { album ->
+            assertEquals(mockAlbum, album)
+        }
+    }
 }
