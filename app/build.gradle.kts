@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.jetbrainsKotlinAndroid) version "1.9.0"
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -54,6 +56,7 @@ dependencies {
     val lifecycle_version = "2.7.0"
     val arch_version = "2.2.0"
     val room_version = "2.6.1"
+    val compose_version = "1.4.3"
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -94,4 +97,23 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     //imagenes de la web
     implementation("io.coil-kt:coil-compose:2.6.0")
+    // dagger hilt
+    implementation("com.google.dagger:hilt-android:2.49")
+    kapt("com.google.dagger:hilt-android-compiler:2.49")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
+    kapt ("androidx.hilt:hilt-compiler:1.0.0")
+    //realizar test
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$compose_version")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
+    //test mokitop
+    testImplementation ("org.mockito:mockito-core:3.11.2")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
+    testImplementation("org.mockito:mockito-inline:2.13.0")
 }
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
+}
+
+

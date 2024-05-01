@@ -16,14 +16,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.AlbumsViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.UI.View.Tabs.TabsContent
-import com.example.mis4203movilvinilosjpc.ActivityPrincipal.UI.ViewModel.ActivityPrincipalViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ActivityPrincipal (navController: NavController){
+fun ActivityPrincipal(
+    navController: NavController,
+    albumsViewModel: AlbumsViewModel
+) {
 
     Scaffold(
         topBar = {
@@ -34,26 +38,21 @@ fun ActivityPrincipal (navController: NavController){
                 ),
                 title = {
                     Text(
-                        modifier =Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center, text ="Vinilos")
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center, text = "Vinilos"
+                    )
 
                 }
             )
         },
 
-    ) { innerPadding ->
+        ) { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            TabsContent(navController)
-
-
+            TabsContent(navController,albumsViewModel)
         }
     }
-
-
-
-
 }
