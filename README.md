@@ -9,6 +9,13 @@
 | Emerson Chaparro Ampa         | e.chaparroa@uniandes.edu.co |
 | Cristian Arnulfo Arias Vargas | ca.ariasv1@uniandes.edu.co  |
 
+### Aclaracion modifición de URL Backend
+El backend de la aplicacion estaba montada en un proyecto de GCP, donde estamos realizando de igual forma los trabajos del curso 4204-cloud, donde realizamos unas pruebas de estres sobre un load balancing, al realizar estas pruebas nos genero una suspencion en la madrugada del proyecto donde estaba el backend de la app presentada para la entrega del Sprint 1, por un presunto ataque de denegacion de servios (DoS). Para el caso se comunico el inconveniente y con aprobacion de Mario se realiza el nuevo despliegue cambiando la URL del backend, las Aplicaciones de prueba y despliegue.
+
+Evidencias:
+![image](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142316997/0e29a104-1f62-4f29-9a1c-714feccfcced)
+![image](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142316997/195f4e70-2246-4e23-a41b-f18b19dd5b66)
+
 ## Requisitos generales del sistema
 Para la instalacion de los requerimentos generales puedes seguir este [Video Tutorial](https://www.youtube.com/watch?v=tFcmRVWts4Q)
 #### Node JS
