@@ -41,7 +41,7 @@ fun ArtistaContent(
             }
         }
         //
-        is ArtistaViewModel.LoadingStateArtist.Success -> {
+/*        is ArtistaViewModel.LoadingStateArtist.Success -> {
             val artistaList = loadingState.data //Obtenemos los datos
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -56,6 +56,7 @@ fun ArtistaContent(
                 }
             }
 
-        }
+        }*/
+        is ArtistaViewModel.LoadingStateArtist.Success -> TODO()
     }
 }

@@ -7,5 +7,5 @@ import javax.inject.Inject
 
 class ArtistListUseCase @Inject constructor(private val repositorio : ArtistRepository) {
 
-    operator fun invoke(): Flow<List<DataItemArtista>> = repositorio.getArtistFlow()
+    operator fun invoke(): Flow<List<DataItemArtista>?> = repositorio.getArtistFlow()
 }

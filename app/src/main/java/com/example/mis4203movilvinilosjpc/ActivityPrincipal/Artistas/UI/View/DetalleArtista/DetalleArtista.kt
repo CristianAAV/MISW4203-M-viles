@@ -41,7 +41,9 @@ fun DetalleArtista(
 
 
 
-          DetalleArtistaUI(artista, artistaViewModel,navController)
+          if (artista != null) {
+              DetalleArtistaUI(artista, artistaViewModel,navController)
+          }
       }
   }
 }
