@@ -8,6 +8,6 @@ import javax.inject.Inject
 class ArtistDetalleUseCase @Inject constructor(
     private val artistRepository: ArtistRepository) {
 
-    operator fun invoke(artistId: String): Flow<DataItemArtista> =
+    operator fun invoke(artistId: String): Flow<DataItemArtista?> =
         artistRepository.getArtistDetalleFlow(artistId)
 }

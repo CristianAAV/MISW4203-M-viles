@@ -8,11 +8,11 @@ import javax.inject.Inject
 
 class ArtistRepository  @Inject constructor(private val api: ArtistService) {
     //servicio de toda la lista de artista
-    fun getArtistFlow(): Flow<List<DataItemArtista>> = api.getArtistsFlow()
+    fun getArtistFlow(): Flow<List<DataItemArtista>?> = api.getArtistsFlow()
     //servicio de un artista
-    fun getArtistDetalleFlow(artistId: String): Flow<DataItemArtista> =
+    fun getArtistDetalleFlow(artistId: String): Flow<DataItemArtista?> =
         api.getArtistFlow(artistId)
     //servicio de un premio
-    fun getPrizeFlow(prizeId: String): Flow<DataPrizesClient> =
+    fun getPrizeFlow(prizeId: String): Flow<DataPrizesClient?> =
         api.getPrizeFlow(prizeId)
 }
