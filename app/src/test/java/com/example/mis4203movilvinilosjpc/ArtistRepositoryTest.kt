@@ -34,6 +34,16 @@ class ArtistRepositoryTest {
         assert(result.isNullOrEmpty())
     }
 
+    @Test
+    fun `test getArtistDetalleFlow with invalid artistId returns null`() = runBlocking {
+        val invalidArtistId = "invalid_id"
+        `when`(mockArtistService.getArtistFlow(invalidArtistId)).thenReturn(flowOf(null))
+
+        val result = artistRepository.getArtistDetalleFlow(invalidArtistId).firstOrNull()
+
+        assert(result == null)
+    }
+    
     companion object {
         fun <T> flowOf(vararg values: T) = kotlinx.coroutines.flow.flow {
             values.forEach { emit(it) }
