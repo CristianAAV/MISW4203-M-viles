@@ -5,6 +5,8 @@ import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.network.
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Network.ArtistClient
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Network.ArtistLisClient
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Network.PrizeClient
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Network.CollectorClient
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Network.CollectorListCLient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +24,7 @@ class NetworkModule {
     @Provides
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://34.66.50.245:3000/")
+            .baseUrl("http://192.168.10.19:3000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -48,6 +50,18 @@ class NetworkModule {
     @Provides
     fun providerArtistClient(retrofit: Retrofit): ArtistClient {
         return retrofit.create(ArtistClient::class.java)
+    }
+
+    //Inyectamos las interface de los endpoints list collectors
+    @Provides
+    fun providerCollectorListClient(retrofit: Retrofit): CollectorListCLient {
+        return retrofit.create(CollectorListCLient::class.java)
+    }
+
+    //Inyectamos las interface de los endpoints collector detalle
+    @Provides
+    fun providerCollectorClient(retrofit: Retrofit): CollectorClient {
+        return retrofit.create(CollectorClient::class.java)
     }
 
     @Provides
