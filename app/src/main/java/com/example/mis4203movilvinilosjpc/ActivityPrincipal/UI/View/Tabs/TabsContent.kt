@@ -12,9 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.AlbumsViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.ViewModel.ArtistaViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.UI.ViewModel.CollectorViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.ExtendedViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.tabsItems
 import kotlinx.coroutines.launch
 
@@ -22,7 +24,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun TabsContent(
     navController: NavController,
-    albumsViewModel: AlbumsViewModel) {
+    albumsViewModel: AlbumsViewModel,
+    artistaViewModel: ArtistaViewModel,
+    collectorViewModel: CollectorViewModel
+    ) {
     val tabs = listOf(
         tabsItems.Album,
         tabsItems.Artista,
@@ -45,7 +50,9 @@ fun TabsContent(
             pagerState = pagerState,
             tabs = tabs,
             navController = navController,
-            albumsViewModel = albumsViewModel
+            albumsViewModel = albumsViewModel,
+            artistaViewModel = artistaViewModel,
+            collectorViewModel = collectorViewModel,
         )
     }
 }
@@ -57,12 +64,14 @@ fun Contents(
     tabs: List<tabsItems>,
     navController: NavController,
     albumsViewModel: AlbumsViewModel,
+    artistaViewModel: ArtistaViewModel,
+    collectorViewModel: CollectorViewModel,
 ) {
     HorizontalPager(
         state = pagerState,
     )
     { page ->
-        tabs[page].screem(navController, albumsViewModel)
+        tabs[page].screem(navController,ExtendedViewModel(albumsViewModel, artistaViewModel, collectorViewModel))
 
     }
 }

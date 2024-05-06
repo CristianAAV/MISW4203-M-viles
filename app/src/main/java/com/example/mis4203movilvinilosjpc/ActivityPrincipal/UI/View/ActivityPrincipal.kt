@@ -16,9 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.AlbumsViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.ViewModel.ArtistaViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.UI.ViewModel.CollectorViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.UI.View.Tabs.TabsContent
 
 
@@ -26,7 +27,9 @@ import com.example.mis4203movilvinilosjpc.ActivityPrincipal.UI.View.Tabs.TabsCon
 @Composable
 fun ActivityPrincipal(
     navController: NavController,
-    albumsViewModel: AlbumsViewModel
+    albumsViewModel: AlbumsViewModel,
+    artistaViewModel: ArtistaViewModel,
+    collectorViewModel: CollectorViewModel,
 ) {
 
     Scaffold(
@@ -52,7 +55,7 @@ fun ActivityPrincipal(
                 .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            TabsContent(navController,albumsViewModel)
+            TabsContent(navController,albumsViewModel,artistaViewModel,collectorViewModel)
         }
     }
 }
