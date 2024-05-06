@@ -180,6 +180,7 @@ Algo asi debe ser
 npm install --save-dev appium@next
 npm install @wdio/appium-service --save-dev
 npm install chai --save-dev
+npm install --save-dev @wdio/local-runner
 ```
 
 
