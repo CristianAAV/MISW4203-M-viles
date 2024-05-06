@@ -21,78 +21,80 @@ class ArtistaViewModel @Inject constructor(
     private val artistListUseCase: ArtistListUseCase,
     private val artistDetalleUseCase: ArtistDetalleUseCase,
     private val prizeClientUseCase: PrizeClientUseCase
-): ViewModel() {
+):ViewModel() {
 
-    // MutableStateFlow para controlar el estado de carga de los artistas
-    private val _artistasLoadingState = MutableStateFlow<LoadingStateArtist<List<DataItemArtista>>>(LoadingStateArtist.Loading)
-    val artistasLoadingState: StateFlow<LoadingStateArtist<List<DataItemArtista>>> = _artistasLoadingState
+    //creamos la clase que controla el estado de la carga de la api
+    private val _artistasLoadingState = MutableStateFlow<LoadingStateArtist<List<DataItemArtista>?>>(LoadingStateArtist.Loading)
+    val artistasLoadingState: StateFlow<LoadingStateArtist<List<DataItemArtista>?>> = _artistasLoadingState
 
-    // MutableStateFlow para controlar el estado de carga del detalle de un artista
-    private val _artistasLoadingStateDetalle = MutableStateFlow<LoadingStateArtist<DataItemArtista>>(LoadingStateArtist.Loading)
-    val artistasLoadingStateDetalle: StateFlow<LoadingStateArtist<DataItemArtista>> = _artistasLoadingStateDetalle
+    //creamos la clase que controla el estado de la carga de la api
+    private val _artistasLoadingStateDetalle = MutableStateFlow<LoadingStateArtist<DataItemArtista?>>(LoadingStateArtist.Loading)
+    val artistasLoadingStateDetalle: StateFlow<LoadingStateArtist<DataItemArtista?>> = _artistasLoadingStateDetalle
 
-    // MutableStateFlow para almacenar los datos de premios
+    //creamos la clase que controla el estado de la carga de la api
     private val _prizeData = MutableStateFlow<DataPrizesClient?>(null)
     val prizeData: StateFlow<DataPrizesClient?> = _prizeData
 
+
+
     init {
-        // Al iniciar el ViewModel, obtenemos la lista de artistas
         getArtistas()
     }
 
-    // Función para obtener los datos de un premio
     fun getPrize(prizeId: String) {
         viewModelScope.launch {
             prizeClientUseCase.invoke(prizeId)
                 .catch {
-                    // Manejar el error
+                    // _artistasLoadingState.value = LoadingStateArtist.Error(it.message ?: "Error al cargar el premio")
                 }
                 .collect {
+                    // _artistasLoadingState.value = LoadingStateArtist.Success(it)
                     _prizeData.value = it
+
                 }
         }
     }
 
-    // Función para obtener la lista de artistas
+    //Solicitar lista de artistas
     fun getArtistas() {
         viewModelScope.launch {
             artistListUseCase.invoke()
                 .catch {
-                    // En caso de error, actualizamos el estado con un mensaje de error
                     _artistasLoadingState.value = LoadingStateArtist.Error(it.message ?: "Error al cargar los artistas")
                 }
                 .collect {
-                    // Cuando se obtienen los datos exitosamente, actualizamos el estado con los datos
+                    //_artistasLoadingState.value = LoadingStateArtist.Success(it)
                     _artistasLoadingState.value = LoadingStateArtist.Success(it)
                 }
         }
     }
 
-    // Función para obtener el detalle de un artista
+    //funcion  encargada de cargar el detalle de artista
     fun getArtistDetalle(artistaId: String) {
         viewModelScope.launch {
             artistDetalleUseCase.invoke(artistaId)
                 .catch {
-                    // En caso de error, actualizamos el estado con un mensaje de error
                     _artistasLoadingStateDetalle.value = LoadingStateArtist.Error(it.message ?: "Error al cargar el artista")
                 }
                 .collect {
-                    // Cuando se obtienen los datos exitosamente, actualizamos el estado con los datos
                     _artistasLoadingStateDetalle.value = LoadingStateArtist.Success(it)
                 }
         }
     }
 
-    // Clase sellada para controlar el estado de carga
-    sealed class LoadingStateArtist<out T> {
-        object Loading : LoadingStateArtist<Nothing>()
-        data class Success<T>(val data: T?) : LoadingStateArtist<T>()
-        data class Error(val errorMessage: String) : LoadingStateArtist<Nothing>()
+
+    //clase cerrada para controlar el estado de la carga
+    sealed class LoadingStateArtist<out T> {//clase cerrada
+    object Loading : LoadingStateArtist<Nothing>()//carga
+        data class Success<T>(val data: T) : LoadingStateArtist<T>()//carga exitosa
+        data class Error(val errorMessage: String) : LoadingStateArtist<Nothing>()//error
     }
 
-    // Función encargada del botón de detalle de un artista
-    /*fun onDetailsClick(artistaId: String, navController: NavController) {
-        // Control para ir a la pantalla de detalle del artista
+    //funcion encargada del button de detalle de artista
+    fun onDetailsClick(artistaId:String, navController: NavController) {
+        //control para ir a la pantalla de detalle
         navController.navigate(route = AppScreem.DetalleArtista.createRoute(artistaId))
-    }*/
+    }
+
+
 }
