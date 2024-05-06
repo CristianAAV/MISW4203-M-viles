@@ -3,6 +3,7 @@ package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.View.Ar
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
@@ -43,7 +44,7 @@ fun ArtistaContent(
         //
         is ArtistaViewModel.LoadingStateArtist.Success -> {
             val artistaList = loadingState.data //Obtenemos los datos
-            LazyColumn(
+            LazyColumn(modifier = modifier.fillMaxSize().padding(horizontal = 10.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 items(artistaList!!) { artista ->
