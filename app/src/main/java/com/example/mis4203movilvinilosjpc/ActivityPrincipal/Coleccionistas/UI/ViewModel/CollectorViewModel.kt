@@ -3,6 +3,10 @@ package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.UI.V
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataItemAlbums
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Domine.AlbumsListUseCase
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataPrizesClient
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.CollectorAlbum
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.DataItemCollectors
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Domine.CollectorUseCase
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Domine.CollectorsListUseCase
@@ -17,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CollectorViewModel @Inject constructor(
     private val collectorUseCase: CollectorUseCase,
-    private val collectorsListUseCase: CollectorsListUseCase
+    private val collectorsListUseCase: CollectorsListUseCase,
+    private val albumsListUseCase: AlbumsListUseCase
 ):ViewModel() {
 
     //validamos el estado de la colecionista
@@ -28,8 +33,42 @@ class CollectorViewModel @Inject constructor(
     private val _collectorDetalleLoadingState = MutableStateFlow<LoadingState<DataItemCollectors>>(LoadingState.Loading)
     val collectorDetalleLoadingState:StateFlow<LoadingState<DataItemCollectors>> = _collectorDetalleLoadingState
 
+    //creamos la variable que controla los albums por collecionista
+    private val _albumsPorCollectors = MutableStateFlow<Map<Int, List<DataItemAlbums>>>(emptyMap())
+    val albumsPorCollectors: StateFlow<Map<Int, List<DataItemAlbums>>> = _albumsPorCollectors
+
     init {
         getCollectors()
+    }
+
+    fun getAlbumsForCollectors(collectors: List<DataItemCollectors>) {
+        viewModelScope.launch {
+            try {
+                val albumsPorCollectorsMap = mutableMapOf<Int, List<DataItemAlbums>>()
+                val albumsMap = mutableMapOf<Int, DataItemAlbums>()
+
+                // Obtener todos los albums disponibles y crear un mapeo entre su id y el objeto DataItemAlbums
+                albumsListUseCase.invoke().collect { albums ->
+                    albums.forEach { album ->
+                        albumsMap[album.id.toInt()] = album
+                    }
+                }
+
+                collectors.forEach { collector ->
+                    val albums = mutableListOf<DataItemAlbums>()
+                    collector.collectorAlbums.forEach { collectorAlbum ->
+                        val album = albumsMap[collectorAlbum.id]
+                        if (album != null) {
+                            albums.add(album)
+                        }
+                    }
+                    albumsPorCollectorsMap[collector.id] = albums
+                }
+                _albumsPorCollectors.value = albumsPorCollectorsMap
+            } catch (e: Exception) {
+                // Manejar el error adecuadamente
+            }
+        }
     }
 
     fun getCollectors(){

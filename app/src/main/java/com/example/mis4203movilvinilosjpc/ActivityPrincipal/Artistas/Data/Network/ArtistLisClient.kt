@@ -16,9 +16,11 @@ interface ArtistClient {
     @GET("Musicians/{id}")
     suspend fun getArtist(@Path("id") id: String): DataItemArtista
 }
-
-//cliente consume servicio de un premio
+//cliente consume servicio de todos los premios
 interface PrizeClient {
-    @GET("Prizes/{id}")
-    suspend fun getPrize(@Path("id") id: String): DataPrizesClient
+    @GET("Prizes")
+    suspend fun getAllPrizes(): List<DataPrizesClient>
 }
+
+
+

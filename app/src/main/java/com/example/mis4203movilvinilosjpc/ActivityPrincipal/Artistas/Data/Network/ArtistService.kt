@@ -29,13 +29,15 @@ class ArtistService @Inject constructor(
             emit(null)
         }
     }
-    //servicio de un premio
-    fun getPrizeFlow(prizeId: String): Flow<DataPrizesClient?> = flow {
+
+    //servicio de todos los premios
+    fun getAllPrizesFlow(): Flow<List<DataPrizesClient>> = flow {
         try {
-            val response = prizeClient.getPrize(prizeId)
+            val response = prizeClient.getAllPrizes()
             emit(response)
         } catch (e: Exception) {
-            emit(null)
+            emit(emptyList())
         }
     }
+
 }

@@ -21,6 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -28,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataItemAlbums
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.Comment
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.DataItemCollectors
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.FavoritePerformer
@@ -41,6 +44,9 @@ fun DetalleCollectorUI(
     collectorViewModel: CollectorViewModel,
     navController: NavHostController) {
 
+    val albumsCollectors by collectorViewModel.albumsPorCollectors.collectAsState(emptyMap())
+
+    val albumsForCollectors = albumsCollectors[collector.id]
 
     Scaffold(
         topBar = {
@@ -92,6 +98,11 @@ fun DetalleCollectorUI(
                     Spacer(modifier = Modifier.padding(4.dp))
                 //content collector comentarios
                     Comments(collector =collector.comments)
+                    Spacer(modifier = Modifier.padding(4.dp))
+                //content collector albums
+                    CollectorAlbumList(albums = albumsForCollectors ?: emptyList())
+
+
                 }
 
         }
@@ -101,73 +112,138 @@ fun DetalleCollectorUI(
 }
 
 @Composable
-fun Comments(collector: List<Comment>) {
-    Card(elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column {
+fun CollectorAlbumList(albums: List<DataItemAlbums>) {
+    Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp)
+    ) {
+        if (albums.isNotEmpty()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)
+            ) {
                 Text(
-                    text = "Comentarios",
-                    modifier = Modifier,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp
+                    text = "Albunes de coleccionista",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
                 )
-                collector.forEachIndexed() { index, comments ->
+                Column(modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp)) {
+                    albums.forEachIndexed { index, dataItemAlbums ->
+                        Text(text = "${index + 1}. ${dataItemAlbums.name}",fontSize = 15.sp)
+
+                    }
+                }
+            }
+        } else {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                text = "No hay álbumes para este coleccionista",
+                style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}
+
+
+
+    @Composable
+    fun Comments(collector: List<Comment>) {
+        Card( elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)) {
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp)
+                ) {
                     Text(
-                        text = "${index + 1}. ${comments.description}",
+                        text = "Comentarios",
+                        modifier = Modifier,
+                        fontWeight = FontWeight.Bold,
                         fontSize = 20.sp
                     )
+                    Box(modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp)) {
+                        collector.forEachIndexed() { index, comments ->
+                            Text(
+                                text = "${index + 1}. ${comments.description}",
+                                fontSize = 15.sp
+                            )
+                        }
+                    }
                 }
-            }
+
         }
     }
-}
 
-@Composable
-fun FavoritePerformers(collector: List<FavoritePerformer>) {
-    Card(elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Column {
-                Text(
-                    text = "Artistas favoritos",
-                    modifier = Modifier,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp
-                )
-                collector.forEachIndexed() { index, favoritePerformer ->
+    @Composable
+    fun FavoritePerformers(collector: List<FavoritePerformer>) {
+        Card( elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)) {
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp)
+                )  {
                     Text(
-                        text = "${index + 1}. ${favoritePerformer.name}",
-                        fontSize = 20.sp
+                        text = "Artistas favoritos",
+                        modifier = Modifier,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
                     )
+                    Box(modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp)) {
+                        collector.forEachIndexed() { index, favoritePerformer ->
+                            Text(
+                                text = "${index + 1}. ${favoritePerformer.name}",
+                                fontSize = 20.sp
+                            )
+                        }
+                    }
                 }
-            }
-        }
-    }
-}
-
-
-
-
-
-@Composable
-fun DatosWhitTitleContent(title: String, content: String,modifier: Modifier) {
-    Card(elevation = CardDefaults.cardElevation(defaultElevation = 10.dp)) {
-        Box(modifier = modifier.fillMaxSize()) {
-            Column {
-                Text(
-                    text = title,
-                    modifier = modifier,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp
-                )
-                Text(
-                    text = content,
-                    modifier = modifier,
-                    fontWeight = FontWeight.Light,
-                    fontSize = 20.sp
-                )
-
-            }
 
         }
     }
-}
+
+    //composable de contenidos general
+    @Composable
+    fun DatosWhitTitleContent(title: String, content: String, modifier: Modifier) {
+        Card( elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)) {
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp)
+                ) {
+                    Text(
+                        text = title,
+                        modifier = modifier,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Box(modifier = modifier.fillMaxSize().padding(horizontal = 8.dp)) {
+                        Text(
+                            text = content,
+                            modifier = modifier,
+                            fontSize = 15.sp
+                        )
+
+                    }
+                }
+
+
+        }
+    }
+

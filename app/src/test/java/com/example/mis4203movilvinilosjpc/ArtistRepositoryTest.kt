@@ -1,6 +1,6 @@
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.Repositorio.ArtistRepository
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataItemArtista
-import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataPrizesClient
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.`DataPrizesClient.kt`
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Network.ArtistService
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.Flow

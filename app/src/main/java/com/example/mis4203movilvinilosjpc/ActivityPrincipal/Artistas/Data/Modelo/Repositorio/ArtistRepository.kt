@@ -13,6 +13,8 @@ class ArtistRepository  @Inject constructor(private val api: ArtistService) {
     fun getArtistDetalleFlow(artistId: String): Flow<DataItemArtista?> =
         api.getArtistFlow(artistId)
     //servicio de un premio
-    fun getPrizeFlow(prizeId: String): Flow<DataPrizesClient?> =
-        api.getPrizeFlow(prizeId)
+  /*  fun getPrizeFlow(prizeId: String): Flow<DataPrizesClient?> =
+        api.getPrizeFlow(prizeId)*/
+
+    fun getAllPrizes(): Flow<List<DataPrizesClient>> = api.getAllPrizesFlow()
 }

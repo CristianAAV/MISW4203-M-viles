@@ -37,8 +37,9 @@ fun DetalleCollector(
             }
         }
         is LoadingState.Success -> {
-
             val collector = loadingState.data
+
+            collectorViewModel.getAlbumsForCollectors(listOf(collector))
             DetalleCollectorUI(collector, collectorViewModel,navController)
         }
     }
