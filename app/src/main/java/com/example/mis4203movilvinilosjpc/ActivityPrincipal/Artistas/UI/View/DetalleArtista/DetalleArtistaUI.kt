@@ -3,6 +3,7 @@ package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.View.De
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,8 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -34,7 +35,6 @@ import coil.compose.AsyncImage
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.Album
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataItemArtista
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataPrizesClient
-import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.PerformerPrize
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.ViewModel.ArtistaViewModel
 
 
@@ -46,7 +46,10 @@ fun DetalleArtistaUI(
     navController: NavController,
 ) {
 
-    val prizeData = artistaViewModel.prizeData.collectAsState()
+    val premiosPorArtista by artistaViewModel.premiosPorArtista.collectAsState(emptyMap())
+
+    // Obtener los premios asociados a este artista
+    val premiosDelArtista = premiosPorArtista[artista.id]
 
     Scaffold(
         topBar = {
@@ -74,15 +77,19 @@ fun DetalleArtistaUI(
         }
 
     ) { paddingValues ->
-        LazyColumn(modifier = Modifier.padding(paddingValues)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
             item {
                 NameImageArtista(artista.image, artista.name, modifier = Modifier)
                 Spacer(modifier = Modifier.padding(15.dp))
-                DescriptionArtista(artista.description,modifier = Modifier)
+                DescriptionArtista(artista.description, modifier = Modifier)
                 Spacer(modifier = Modifier.padding(4.dp))
-                AlbumsArtista(artista.albums,modifier = Modifier)
+                AlbumsArtista(artista.albums, modifier = Modifier)
                 Spacer(modifier = Modifier.padding(4.dp))
-                performerPrizes(artista.performerPrizes,modifier = Modifier,prizeData,artistaViewModel)
+                performerPrizes(premiosDelArtista, modifier = Modifier)
 
             }
         }
@@ -113,7 +120,7 @@ fun NameImageArtista(image: String, name: String, modifier: Modifier) {
             .fillMaxWidth()
             .size(200.dp, 200.dp),
 
-        alignment= Alignment.Center
+        alignment = Alignment.Center
     )
 }
 
@@ -122,13 +129,18 @@ fun NameImageArtista(image: String, name: String, modifier: Modifier) {
 fun DescriptionArtista(description: String, modifier: Modifier) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
-        modifier = modifier.padding(horizontal = 8.dp)) {
-        Box(modifier = modifier
-            .fillMaxWidth()
-            .padding(10.dp)){
-            Text(text = description,
+        modifier = modifier.padding(horizontal = 8.dp)
+    ) {
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+        ) {
+            Text(
+                text = description,
                 textAlign = TextAlign.Justify,
-                modifier = modifier.fillMaxWidth())
+                modifier = modifier.fillMaxWidth()
+            )
         }
 
     }
@@ -136,20 +148,31 @@ fun DescriptionArtista(description: String, modifier: Modifier) {
 
 //albums de artista
 @Composable
-fun AlbumsArtista(albums: List<Album>,modifier: Modifier) {
+fun AlbumsArtista(albums: List<Album>, modifier: Modifier) {
 
-    Card(elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
-        modifier = modifier.padding(horizontal = 8.dp)) {
-        Column(modifier = modifier.fillMaxWidth().padding(10.dp)) {
+    Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+        modifier = modifier.padding(horizontal = 8.dp)
+    ) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+        ) {
             Text(
                 text = "Albums",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
-            albums.forEachIndexed { index, album ->
-                Text(text = "${index + 1}. ${album.name}")
+            Column(modifier = modifier
+                .fillMaxSize()
+                .padding(8.dp)) {
+                albums.forEachIndexed { index, album ->
+                    Text(text = "${index + 1}. ${album.name}", fontSize = 15.sp)
+                }
             }
         }
+
 
     }
 }
@@ -157,29 +180,35 @@ fun AlbumsArtista(albums: List<Album>,modifier: Modifier) {
 //premios de artista
 @Composable
 fun performerPrizes(
-    performerPrizes: List<PerformerPrize>,
-    modifier: Modifier,
-    prizeData: State<DataPrizesClient?>,
-    artistaViewModel: ArtistaViewModel
-) {
-//todo buscar en base de datos id de premios
+    premiosDelArtista: List<DataPrizesClient?>?,
+    modifier: Modifier.Companion,
 
-    Card(elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
-        modifier = modifier.padding(horizontal = 8.dp)) {
-        Column(modifier = modifier.fillMaxWidth().padding(10.dp)) {
+    ) {
+    Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+        modifier = modifier.padding(horizontal = 8.dp)
+    ) {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(10.dp)
+        ) {
             Text(
                 text = "Premios",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
-            performerPrizes.forEachIndexed() { index, performerPrize ->
-                artistaViewModel.getPrize(performerPrize.id.toString())
-                Text(text = "${index + 1}. ${prizeData.value?.name ?: ""}")
+            Column(modifier = modifier
+                .fillMaxSize()
+                .padding(8.dp)) {
+                premiosDelArtista?.forEachIndexed { index, premio ->
+                    Text(text = "${index + 1}. ${premio?.name}", fontSize = 15.sp)
+                }
             }
+
         }
 
     }
 
 
 }
-

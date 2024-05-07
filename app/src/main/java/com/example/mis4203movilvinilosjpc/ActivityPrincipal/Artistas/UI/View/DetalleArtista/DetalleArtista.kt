@@ -19,9 +19,11 @@ fun DetalleArtista(
     data:String ?
 ) {
 
+    artistaViewModel.getArtistDetalle(data ?: "100")
+
     val artistaDetalleState by artistaViewModel.artistasLoadingStateDetalle.collectAsState()
 
-    artistaViewModel.getArtistDetalle(data ?: "100")
+
 
     //controlamos el estado de carga
   when (val loadingState = artistaDetalleState) {
@@ -39,11 +41,11 @@ fun DetalleArtista(
       is ArtistaViewModel.LoadingStateArtist.Success -> {
           val artista = loadingState.data//obtenemos los datos
 
-
-
+          artistaViewModel.getPrizesForArtists(listOf(artista!!))
           if (artista != null) {
               DetalleArtistaUI(artista, artistaViewModel,navController)
           }
+
       }
   }
 }
