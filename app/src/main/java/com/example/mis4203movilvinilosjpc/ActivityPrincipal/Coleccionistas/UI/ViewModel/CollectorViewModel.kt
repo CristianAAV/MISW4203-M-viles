@@ -1,5 +1,7 @@
 package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.UI.ViewModel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -36,6 +38,16 @@ class CollectorViewModel @Inject constructor(
     //creamos la variable que controla los albums por collecionista
     private val _albumsPorCollectors = MutableStateFlow<Map<Int, List<DataItemAlbums>>>(emptyMap())
     val albumsPorCollectors: StateFlow<Map<Int, List<DataItemAlbums>>> = _albumsPorCollectors
+
+    //Variable que controla estado del boton volver.
+    private val _enableButton =
+        MutableLiveData<Boolean>()
+    val enableButton: LiveData<Boolean> = _enableButton
+
+    //Variable que controla estado del boton volver.
+    private val _enableButtonBackStack =
+        MutableLiveData<Boolean>()
+    val enableButtonBackStack: LiveData<Boolean> = _enableButtonBackStack
 
     init {
         getCollectors()
@@ -96,7 +108,15 @@ class CollectorViewModel @Inject constructor(
     }
 
     fun onDetailsClick(idCollector: String, navController: NavController) {
+        _enableButtonBackStack.value = true
+        _enableButton.value = false
         navController.navigate(route = AppScreem.DetalleColeccionista.createRoute(idCollector) )
+    }
+
+
+    fun enableButton(){
+        _enableButtonBackStack.value= false
+        _enableButton.value= true
     }
 
 }

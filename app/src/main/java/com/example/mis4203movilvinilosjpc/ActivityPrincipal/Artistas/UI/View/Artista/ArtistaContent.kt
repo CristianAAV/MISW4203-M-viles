@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,6 +26,9 @@ fun ArtistaContent(
 ) {
     val artistaLoadingState by artistaViewModel.artistasLoadingState.collectAsState()
 
+
+    //variable para controlar el estado del boton.
+    val enableButton by artistaViewModel.enableButton.observeAsState(true)
 
     //Controlamos el estado de carga
     when (val loadingState = artistaLoadingState) {
@@ -52,6 +56,7 @@ fun ArtistaContent(
                         artista = artista,
                         onClickDetalleArtista = {
                             artistaViewModel.onDetailsClick(artista.id.toString(), navController) },
+                        enableButton = enableButton,
                         navController = navController
                     )
                 }

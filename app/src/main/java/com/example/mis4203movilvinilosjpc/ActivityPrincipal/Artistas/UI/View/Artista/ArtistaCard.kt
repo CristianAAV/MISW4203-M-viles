@@ -29,8 +29,10 @@ import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo
 @Composable
 fun ArtistaCard(
     artista: DataItemArtista,
-    onClickDetalleArtista:() -> Unit,
-    navController: NavController ) {
+    onClickDetalleArtista: () -> Unit,
+    navController: NavController,
+    enableButton: Boolean
+) {
 
 
 
@@ -47,7 +49,9 @@ fun ArtistaCard(
             ArtistInformation(
                 artista = artista.name,
                 modifier = Modifier.weight(0.7f),
-                onClickDetalleArtista = onClickDetalleArtista)
+                onClickDetalleArtista = onClickDetalleArtista,
+                enabled = enableButton
+                )
             ArtisCover(artista.image,modifier = Modifier.weight(0.3f))
         }
     }
@@ -57,7 +61,8 @@ fun ArtistaCard(
 fun ArtistInformation(
     artista: String,
     modifier: Modifier,
-    onClickDetalleArtista: () -> Unit
+    onClickDetalleArtista: () -> Unit,
+    enabled: Boolean
 ) {
    Column (modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
        //nombre del artisa o banda
@@ -67,10 +72,15 @@ fun ArtistInformation(
            fontWeight = FontWeight.Bold
        )
        //Btn para ver detalles
-       Button(onClickDetalleArtista) {
+       Button(
+           enabled = enabled,
+           onClick = onClickDetalleArtista
+       )
+       {
            Text(
                text = "ver detalles",
                fontSize = 16.sp)
+
        }
    }
 }
