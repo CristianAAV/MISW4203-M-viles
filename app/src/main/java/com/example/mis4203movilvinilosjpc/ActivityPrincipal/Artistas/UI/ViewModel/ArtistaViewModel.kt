@@ -2,6 +2,8 @@ package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.ViewMod
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -37,6 +39,17 @@ class ArtistaViewModel @Inject constructor(
     //creamos la variable que controla los premios por artista
     private val _premiosPorArtista = MutableStateFlow<Map<Int, List<DataPrizesClient?>>>(emptyMap())
     val premiosPorArtista: StateFlow<Map<Int, List<DataPrizesClient?>>> = _premiosPorArtista
+
+
+    //Variable que controla estado del boton volver.
+    private val _enableButton =
+        MutableLiveData<Boolean>()
+    val enableButton: LiveData<Boolean> = _enableButton
+
+    //Variable que controla estado del boton volver.
+    private val _enableButtonBackStack =
+        MutableLiveData<Boolean>()
+    val enableButtonBackStack: LiveData<Boolean> = _enableButtonBackStack
 
 
     init {
@@ -112,9 +125,15 @@ class ArtistaViewModel @Inject constructor(
 
     //funcion encargada del button de detalle de artista
     fun onDetailsClick(artistaId:String, navController: NavController) {
+        _enableButtonBackStack.value = true
+        _enableButton.value = false
         //control para ir a la pantalla de detalle
         navController.navigate(route = AppScreem.DetalleArtista.createRoute(artistaId))
     }
 
+    fun enableButton(){
+        _enableButtonBackStack.value= false
+        _enableButton.value= true
+    }
 
 }

@@ -11,6 +11,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,6 +27,9 @@ fun CollectorsContent(
 ) {
     // variable para controlar el estado de carga
     val collectorsViewModel = collectorViewModel.collectorsLoadingState.collectAsState()
+
+    //variable para controlar el estado del boton.
+    val enableButton by collectorViewModel.enableButton.observeAsState(true)
 
     when (val loadingState = collectorsViewModel.value) {
 
@@ -51,6 +56,7 @@ fun CollectorsContent(
                     items(collectorList) { collector ->
 
                         CollectorCard(
+                            enableButton = enableButton,
                             collector = collector,
                             navController = navController
                         ) {

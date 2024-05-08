@@ -23,6 +23,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -48,6 +49,8 @@ fun DetalleArtistaUI(
 
     val premiosPorArtista by artistaViewModel.premiosPorArtista.collectAsState(emptyMap())
 
+    val enableButtonBackStack by artistaViewModel.enableButtonBackStack.observeAsState(true)
+
     // Obtener los premios asociados a este artista
     val premiosDelArtista = premiosPorArtista[artista.id]
 
@@ -60,7 +63,10 @@ fun DetalleArtistaUI(
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(
+                        enabled = enableButtonBackStack,
+                        onClick = { artistaViewModel.enableButton()
+                            navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Imagen del menu del drawer"

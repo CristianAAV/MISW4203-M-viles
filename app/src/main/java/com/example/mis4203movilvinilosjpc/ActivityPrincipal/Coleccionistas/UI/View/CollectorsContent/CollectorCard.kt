@@ -23,6 +23,7 @@ import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.
 
 @Composable
 fun CollectorCard(
+    enableButton : Boolean,
     collector: DataItemCollectors,
     navController: NavController,
     onClickDetalleCollector: () -> Unit
@@ -47,7 +48,9 @@ fun CollectorCard(
                     fontSize = 20.0.sp
                 )
                 Spacer(modifier = Modifier.padding(top = 4.dp))
-                Button(onClick = { onClickDetalleCollector() }) {
+                Button(
+                    enabled = enableButton,
+                    onClick = { onClickDetalleCollector() }) {
                     Text(
                         text = "Ver detalle",
                         fontSize = 16.0.sp

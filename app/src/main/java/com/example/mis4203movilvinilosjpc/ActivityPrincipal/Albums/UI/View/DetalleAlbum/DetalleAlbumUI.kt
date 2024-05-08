@@ -67,6 +67,8 @@ fun DetalleAlbumUI(
 ) {
     val comentarios by albumsViewModel.comentarios.observeAsState("")
     val isKeyBoardVisible by albumsViewModel.isKeyBoardVisible.observeAsState(false)
+    val enableButtonBackStack by albumsViewModel.enableButtonBackStack.observeAsState(true)
+
     Scaffold(
         topBar = {
 
@@ -76,7 +78,10 @@ fun DetalleAlbumUI(
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(
+                        enabled = enableButtonBackStack,
+                        onClick = { albumsViewModel.enableButton()
+                            navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Imagen del menu del drawer"
@@ -129,7 +134,7 @@ fun DetalleAlbumUI(
             modifier = modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
-                .size(200.dp,200.dp)
+                .size(200.dp, 200.dp)
                 .fillMaxWidth()
                 .clip(RectangleShape)
                 .padding(8.dp),
@@ -146,7 +151,8 @@ fun DetalleAlbumUI(
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         modifier = modifier
-            .padding(8.dp).testTag("titleAlbumDetail")
+            .padding(8.dp)
+            .testTag("titleAlbumDetail")
     )
 }
 
@@ -285,7 +291,9 @@ private fun CommentSection(
             )
             Button(
                 onClick = { /* Implementar lógica de envío de comentario */ },
-                modifier = Modifier.align(Alignment.End).testTag("btnComentAlbumsDetail")
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .testTag("btnComentAlbumsDetail")
             ) {
                 Text("Enviar",
                     modifier = Modifier.testTag("textBtnComentAlbumsDetail"))
@@ -315,7 +323,8 @@ private fun AlbumComments(comments: List<Comment>, modifier: Modifier = Modifier
         comments.forEachIndexed { index, comment ->
             Text(
                 text = "${index + 1}. ${comment.description}",
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier
+                    .padding(8.dp)
                     .testTag("commentAlbumsDetail")
             )
         }
