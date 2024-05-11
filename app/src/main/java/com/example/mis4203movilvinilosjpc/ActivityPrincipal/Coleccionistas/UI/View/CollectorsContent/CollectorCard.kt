@@ -15,6 +15,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,15 +48,21 @@ fun CollectorCard(
                 Text(
                     text = collector.name,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 20.0.sp
+                    fontSize = 20.0.sp,
+                    modifier = Modifier.fillMaxWidth()
+                        .testTag("collectorName")
+                        .semantics { contentDescription = "collectorName" }
                 )
                 Spacer(modifier = Modifier.padding(top = 4.dp))
                 Button(
                     enabled = enableButton,
                     onClick = { onClickDetalleCollector() }) {
                     Text(
-                        text = "Ver detalle",
-                        fontSize = 16.0.sp
+                        text = "Ver Detalle",
+                        fontSize = 16.0.sp,
+                        modifier = Modifier
+                            .testTag("collectorButtonDetail")
+                            .semantics { contentDescription = "collectorButtonDetail" }
                     )
                 }
 
