@@ -27,6 +27,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -75,8 +78,10 @@ fun DetalleArtistaUI(
                 },
                 title = {
                     Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center, text = "detalle de Artista"
+                        textAlign = TextAlign.Center, text = "Detalle de Artista",
+                        modifier = Modifier.fillMaxWidth()
+                        .testTag("artistaDetalleTitle")
+                        .semantics { contentDescription = "artistaDetalleTitle" }
                     )
                 }
             )
@@ -112,7 +117,9 @@ fun NameImageArtista(image: String, name: String, modifier: Modifier) {
         text = name,
         modifier = modifier
             .padding(10.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag("artisNameDetail")
+            .semantics { contentDescription = "artisNameDetail" },
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.Bold,
         fontSize = 25.sp
@@ -124,7 +131,9 @@ fun NameImageArtista(image: String, name: String, modifier: Modifier) {
         contentScale = ContentScale.Inside,
         modifier = modifier
             .fillMaxWidth()
-            .size(200.dp, 200.dp),
+            .size(200.dp, 200.dp)
+            .testTag("artisCoverDetail")
+            .semantics { contentDescription = "artisCoverDetail" },
 
         alignment = Alignment.Center
     )
@@ -146,6 +155,8 @@ fun DescriptionArtista(description: String, modifier: Modifier) {
                 text = description,
                 textAlign = TextAlign.Justify,
                 modifier = modifier.fillMaxWidth()
+                    .testTag("artisDescription")
+                    .semantics { contentDescription = "artisDescription" }
             )
         }
 
@@ -168,13 +179,22 @@ fun AlbumsArtista(albums: List<Album>, modifier: Modifier) {
             Text(
                 text = "Albums",
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                modifier = modifier.fillMaxWidth()
+                    .testTag("artisAlbumText")
+                    .semantics { contentDescription = "artisAlbumText" }
             )
             Column(modifier = modifier
                 .fillMaxSize()
                 .padding(8.dp)) {
                 albums.forEachIndexed { index, album ->
-                    Text(text = "${index + 1}. ${album.name}", fontSize = 15.sp)
+                    Text(
+                        text = "${index + 1}. ${album.name}",
+                        fontSize = 15.sp,
+                        modifier = modifier.fillMaxWidth()
+                            .testTag("artisAlbumDetail")
+                            .semantics { contentDescription = "artisAlbumDetail" }
+                    )
                 }
             }
         }
@@ -202,13 +222,21 @@ fun performerPrizes(
             Text(
                 text = "Premios",
                 fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                modifier = modifier.fillMaxWidth()
+                    .testTag("artisPriceText")
+                    .semantics { contentDescription = "artisPriceText" }
             )
             Column(modifier = modifier
                 .fillMaxSize()
                 .padding(8.dp)) {
                 premiosDelArtista?.forEachIndexed { index, premio ->
-                    Text(text = "${index + 1}. ${premio?.name}", fontSize = 15.sp)
+                    Text(text = "${index + 1}. ${premio?.name}",
+                        fontSize = 15.sp,
+                        modifier = modifier.fillMaxWidth()
+                            .testTag("artisPriceDetail")
+                            .semantics { contentDescription = "artisPriceDetail" }
+                    )
                 }
             }
 

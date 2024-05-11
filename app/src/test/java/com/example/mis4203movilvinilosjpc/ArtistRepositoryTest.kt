@@ -1,6 +1,6 @@
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.Repositorio.ArtistRepository
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataItemArtista
-/*import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.`DataPrizesClient.kt`*/
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataPrizesClient
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Network.ArtistService
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.Flow
@@ -44,7 +44,7 @@ class ArtistRepositoryTest {
         assert(result == null)
     }
 
-/*    @Test
+    @Test
     fun `test getPrizeFlow with invalid prizeId returns null`() = runBlocking {
         val invalidPrizeId = "invalid_id"
         `when`(mockArtistService.getPrizeFlow(invalidPrizeId)).thenReturn(flowOf(null))
@@ -52,8 +52,19 @@ class ArtistRepositoryTest {
         val result = artistRepository.getPrizeFlow(invalidPrizeId).firstOrNull()
 
         assert(result == null)
-    }*/
-    
+    }
+
+    @Test
+    fun `test getPrizeFlow returns prize`() = runBlocking {
+        val prizeId = "valid_id"
+        val prize = DataPrizesClient(1, "Organization", "Prize Name", "Description", emptyList())
+        `when`(mockArtistService.getPrizeFlow(prizeId)).thenReturn(flow { emit(prize) })
+
+        val result = artistRepository.getPrizeFlow(prizeId).firstOrNull()
+
+        assert(result == prize)
+    }
+
     companion object {
         fun <T> flowOf(vararg values: T) = kotlinx.coroutines.flow.flow {
             values.forEach { emit(it) }

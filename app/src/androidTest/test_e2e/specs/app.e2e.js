@@ -20,4 +20,31 @@
       const titleText = await titleElement.getText();
       assert.isNotEmpty(titleText, 'Vinilos');
     });
+
+    it('should display the app tab Albums on the screen', async function() {
+      const tabElement = await $('//android.widget.TextView[@text="Albums"]');
+      if (!tabElement) {
+          throw new Error('No se encontró el elemento del tab de Albums de la app');
+      }
+      const tabText = await tabElement.getText();
+      assert.isNotEmpty(tabText, 'Albums');
+    });
+
+    it('should display the app tab Artistas on the screen', async function() {
+      const tabElement = await $('//android.widget.TextView[@text="Artistas"]');
+      if (!tabElement) {
+          throw new Error('No se encontró el elemento del tab de Artistas de la app');
+      }
+      const tabText = await tabElement.getText();
+      assert.isNotEmpty(tabText, 'Artistas');
+    });
+
+    it('should display the app tab Coleccionistas on the screen', async function() {
+      const tabElement = await $('//android.widget.TextView[@text="Coleccionistas"]');
+      if (!tabElement) {
+          throw new Error('No se encontró el elemento del tab de Coleccionistas de la app');
+      }
+      const tabText = await tabElement.getText();
+      assert.isNotEmpty(tabText, 'Coleccionistas');
+    });
 });

@@ -20,6 +20,10 @@ interface ArtistClient {
 interface PrizeClient {
     @GET("Prizes")
     suspend fun getAllPrizes(): List<DataPrizesClient>
+
+    @GET("Prizes/{id}")
+    suspend fun getPrize(@Path("id") id: String): DataPrizesClient
+
 }
 
 

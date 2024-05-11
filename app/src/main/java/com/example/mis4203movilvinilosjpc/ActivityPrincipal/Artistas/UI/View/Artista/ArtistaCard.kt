@@ -19,6 +19,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,7 +54,11 @@ fun ArtistaCard(
                 onClickDetalleArtista = onClickDetalleArtista,
                 enabled = enableButton
                 )
-            ArtisCover(artista.image,modifier = Modifier.weight(0.3f))
+            ArtisCover(artista.image,
+                modifier = Modifier.weight(0.3f)
+                    .testTag("artistaCover")
+                    .semantics { contentDescription = "artistaCover"}
+            )
         }
     }
 }
@@ -60,16 +66,21 @@ fun ArtistaCard(
 @Composable
 fun ArtistInformation(
     artista: String,
-    modifier: Modifier,
     onClickDetalleArtista: () -> Unit,
+    modifier: Modifier = Modifier,
     enabled: Boolean
 ) {
-   Column (modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+   Column (modifier = modifier.fillMaxWidth(),
+       horizontalAlignment = Alignment.CenterHorizontally)
+   {
        //nombre del artisa o banda
        Text(
            text = artista,
            fontSize = 20.sp,
-           fontWeight = FontWeight.Bold
+           fontWeight = FontWeight.Bold,
+           modifier = Modifier
+               .testTag("artistaName")
+               .semantics { contentDescription = "artistaName"}
        )
        //Btn para ver detalles
        Button(
@@ -78,8 +89,13 @@ fun ArtistInformation(
        )
        {
            Text(
-               text = "ver detalles",
-               fontSize = 16.sp)
+               text = "Ver Detalles",
+               fontSize = 16.sp,
+               modifier =Modifier
+                   .testTag("artistaDetalle")
+                   .semantics { contentDescription = "artistaDetalle" }
+
+               )
 
        }
    }

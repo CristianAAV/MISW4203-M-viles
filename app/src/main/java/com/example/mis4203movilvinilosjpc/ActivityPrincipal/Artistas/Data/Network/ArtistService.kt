@@ -40,4 +40,14 @@ class ArtistService @Inject constructor(
         }
     }
 
+    // Servicio de un premio
+    fun getPrizeFlow(prizeId: String): Flow<DataPrizesClient?> = flow {
+        try {
+            val response = prizeClient.getPrize(prizeId)
+            emit(response)
+        } catch (e: Exception) {
+            emit(null)
+        }
+    }
+
 }
