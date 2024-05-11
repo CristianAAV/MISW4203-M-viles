@@ -1,7 +1,5 @@
 package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo
 
-import androidx.room.PrimaryKey
-
 data class DataItemArtista(
     val id: Int,
     val name: String,
