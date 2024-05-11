@@ -43,6 +43,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -91,7 +93,7 @@ fun DetalleAlbumUI(
                 title = {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center, text = "detalle de album"
+                        textAlign = TextAlign.Center, text = "Detalle del Album"
                     )
                 }
             )
@@ -153,6 +155,7 @@ fun DetalleAlbumUI(
         modifier = modifier
             .padding(8.dp)
             .testTag("titleAlbumDetail")
+            .semantics { contentDescription = "titleAlbumsDetail" }
     )
 }
 
@@ -201,7 +204,8 @@ private fun AlbumArtist(performers: List<Performer>, modifier: Modifier = Modifi
         )
         performers.forEach { performer ->
             Text(performer.name,
-                modifier = Modifier.testTag("performansAlbumsDetail"))
+                modifier = Modifier.testTag("albumPerformersDetail")
+                    .semantics { contentDescription = "albumPerformersDetail" })
         }
     }
 }
@@ -215,7 +219,8 @@ fun AlbumGenre(genre: String, modifier: Modifier) {
             fontWeight = FontWeight.Bold
         )
         Text(genre,
-            modifier = Modifier.testTag("generoAlbumsDetail"))
+            modifier = Modifier.testTag("albumGenreDetail")
+                .semantics { contentDescription = "albumGenreDetail" })
     }
 
 }
@@ -229,7 +234,8 @@ private fun AlbumTracks(tracks: List<Track>, modifier: Modifier = Modifier) {
         )
         tracks.forEachIndexed { index, track ->
             Text(text = "${index + 1}. ${track.name}",
-                modifier = Modifier.testTag("singAlbumsDetail"))
+                modifier = Modifier.testTag("albumSingDetail")
+                    .semantics { contentDescription = "albumSingDetail" })
         }
     }
 }
@@ -247,7 +253,8 @@ private fun AlbumReleaseDate(
         )
         val formattedDate = albumsViewModel.formatReleaseDate(releaseDate)
         Text(formattedDate,
-            modifier = Modifier.testTag("dateAlbumsDetail"))
+            modifier = Modifier.testTag("albumDateDetail")
+                .semantics { contentDescription = "albumDateDetail" })
     }
 }
 
