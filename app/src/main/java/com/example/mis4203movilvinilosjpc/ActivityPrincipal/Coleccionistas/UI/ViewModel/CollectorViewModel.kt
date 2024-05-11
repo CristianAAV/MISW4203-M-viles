@@ -7,8 +7,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataItemAlbums
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Domine.AlbumsListUseCase
-import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataPrizesClient
-import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.CollectorAlbum
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.DataItemCollectors
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Domine.CollectorUseCase
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Domine.CollectorsListUseCase
@@ -123,7 +121,7 @@ class CollectorViewModel @Inject constructor(
 
 //clase cerrada para controlar el estado de la carga
 sealed class LoadingState<out T> {//clase cerrada
-object Loading : LoadingState<Nothing>()//carga
+data object Loading : LoadingState<Nothing>()//carga
     data class Success<T>(val data: T) : LoadingState<T>()//carga exitosa
     data class Error(val errorMessage: String) : LoadingState<Nothing>()//error
 }
