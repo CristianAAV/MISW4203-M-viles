@@ -3,12 +3,15 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid) version "1.9.0"
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("androidx.room")
 }
 
 android {
     namespace = "com.example.mis4203movilvinilosjpc"
     compileSdk = 34
-
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
     defaultConfig {
         applicationId = "com.example.mis4203movilvinilosjpc"
         minSdk = 22
@@ -20,6 +23,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
     }
 
     buildTypes {
@@ -90,6 +94,10 @@ dependencies {
     //room
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$room_version")
+        // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
     //retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")

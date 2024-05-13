@@ -1,5 +1,6 @@
 package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -69,10 +70,16 @@ class AlbumsViewModel @Inject constructor(
             albumsListUseCase.invoke()//llamada a la api
                 .catch {//captura de excepciones
                     _albumsLoadingState.value =//controla el estado de la carga
+
                         LoadingState.Error(it.message ?: "Error al cargar los álbumes")//error
                 }
                 .collect { albums ->//controla el estado de la carga
-                    _albumsLoadingState.value = LoadingState.Success(albums)//carga exitosa
+                    if(albums.isEmpty()){
+
+                    }else{
+                        _albumsLoadingState.value = LoadingState.Success(albums)//carga exitosa
+                    }
+
                 }
         }
     }

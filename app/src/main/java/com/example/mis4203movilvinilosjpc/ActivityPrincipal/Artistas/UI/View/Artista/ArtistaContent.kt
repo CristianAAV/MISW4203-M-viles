@@ -48,6 +48,13 @@ fun ArtistaContent(
         //
         is ArtistaViewModel.LoadingStateArtist.Success -> {
             val artistaList = loadingState.data //Obtenemos los datos
+
+            if(artistaList!!.isEmpty()) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
+
             LazyColumn(modifier = modifier.fillMaxSize().padding(horizontal = 10.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {

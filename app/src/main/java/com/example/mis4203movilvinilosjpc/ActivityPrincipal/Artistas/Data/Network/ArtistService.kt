@@ -17,7 +17,7 @@ class ArtistService @Inject constructor(
             val response = artistListClient.getArtistas()
             emit(response)
         } catch (e: Exception) {
-            emit(null)
+           // emit(null)
         }
     }
     //servicio de un artista
@@ -26,7 +26,7 @@ class ArtistService @Inject constructor(
             val response = artistClient.getArtist(artistId)
             emit(response)
         } catch (e: Exception) {
-            emit(null)
+           // emit(null)
         }
     }
 
@@ -36,7 +36,7 @@ class ArtistService @Inject constructor(
             val response = prizeClient.getAllPrizes()
             emit(response)
         } catch (e: Exception) {
-            emit(emptyList())
+          //  emit(emptyList())
         }
     }
 
@@ -46,7 +46,7 @@ class ArtistService @Inject constructor(
             val response = prizeClient.getPrize(prizeId)
             emit(response)
         } catch (e: Exception) {
-            emit(null)
+           // emit(null)
         }
     }
 
