@@ -15,7 +15,7 @@ class CollectorsServices @Inject constructor(
             val response = CollectorListClient.getCollectors()
             emit(response)
         } catch (e: Exception) {
-            emit(emptyList())
+
         }
     }
     //Servicio para obtenemos los datos de collecionista
