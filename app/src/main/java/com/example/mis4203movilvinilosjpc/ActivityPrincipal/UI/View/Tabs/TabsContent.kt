@@ -12,9 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.AlbumsViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.ViewModel.ArtistaViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.UI.ViewModel.CollectorViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.ExtendedViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.tabsItems
 import kotlinx.coroutines.launch
 
@@ -22,12 +24,17 @@ import kotlinx.coroutines.launch
 @Composable
 fun TabsContent(
     navController: NavController,
-    albumsViewModel: AlbumsViewModel) {
+    albumsViewModel: AlbumsViewModel,
+    artistaViewModel: ArtistaViewModel,
+    collectorViewModel: CollectorViewModel,
+) {
+    // Create a list of tabs
     val tabs = listOf(
         tabsItems.Album,
         tabsItems.Artista,
         tabsItems.Coleccionista
     )
+    // Create a pager state para controlar el estado de la paginacion
     val pagerState = rememberPagerState(
         initialPage = 0,
         initialPageOffsetFraction = 0f
@@ -40,12 +47,14 @@ fun TabsContent(
             pagerState = pagerState,
             tabs = tabs,
 
-        )
+            )
         Contents(
             pagerState = pagerState,
             tabs = tabs,
             navController = navController,
-            albumsViewModel = albumsViewModel
+            albumsViewModel = albumsViewModel,
+            artistaViewModel = artistaViewModel,
+            collectorViewModel = collectorViewModel,
         )
     }
 }
@@ -57,12 +66,17 @@ fun Contents(
     tabs: List<tabsItems>,
     navController: NavController,
     albumsViewModel: AlbumsViewModel,
+    artistaViewModel: ArtistaViewModel,
+    collectorViewModel: CollectorViewModel,
 ) {
     HorizontalPager(
         state = pagerState,
     )
     { page ->
-        tabs[page].screem(navController, albumsViewModel)
+        tabs[page].screem(
+            navController,
+            ExtendedViewModel(albumsViewModel, artistaViewModel, collectorViewModel)
+        )
 
     }
 }
@@ -71,7 +85,7 @@ fun Contents(
 @Composable
 fun Tabs(
     pagerState: PagerState,
-    tabs: List<tabsItems>
+    tabs: List<tabsItems>,
 
     ) {
     val scope = rememberCoroutineScope() // corrutina para cargar las imagenes de cada tabs
@@ -92,7 +106,7 @@ fun Tabs(
                 text = {
                     Text(
                         text = tab.title,
-                        fontSize = 15.sp
+                        fontSize = 12.sp
                     )
                 }
             )

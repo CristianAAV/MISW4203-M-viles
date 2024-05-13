@@ -43,6 +43,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -67,6 +69,8 @@ fun DetalleAlbumUI(
 ) {
     val comentarios by albumsViewModel.comentarios.observeAsState("")
     val isKeyBoardVisible by albumsViewModel.isKeyBoardVisible.observeAsState(false)
+    val enableButtonBackStack by albumsViewModel.enableButtonBackStack.observeAsState(true)
+
     Scaffold(
         topBar = {
 
@@ -76,7 +80,10 @@ fun DetalleAlbumUI(
                     titleContentColor = MaterialTheme.colorScheme.primary,
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(
+                        enabled = enableButtonBackStack,
+                        onClick = { albumsViewModel.enableButton()
+                            navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Imagen del menu del drawer"
@@ -86,7 +93,7 @@ fun DetalleAlbumUI(
                 title = {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center, text = "detalle de album"
+                        textAlign = TextAlign.Center, text = "Detalle del Album"
                     )
                 }
             )
@@ -129,7 +136,7 @@ fun DetalleAlbumUI(
             modifier = modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterHorizontally)
-                .size(200.dp,200.dp)
+                .size(200.dp, 200.dp)
                 .fillMaxWidth()
                 .clip(RectangleShape)
                 .padding(8.dp),
@@ -146,7 +153,9 @@ fun DetalleAlbumUI(
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp,
         modifier = modifier
-            .padding(8.dp).testTag("titleAlbumDetail")
+            .padding(8.dp)
+            .testTag("titleAlbumDetail")
+            .semantics { contentDescription = "titleAlbumsDetail" }
     )
 }
 
@@ -195,7 +204,8 @@ private fun AlbumArtist(performers: List<Performer>, modifier: Modifier = Modifi
         )
         performers.forEach { performer ->
             Text(performer.name,
-                modifier = Modifier.testTag("performansAlbumsDetail"))
+                modifier = Modifier.testTag("albumPerformersDetail")
+                    .semantics { contentDescription = "albumPerformersDetail" })
         }
     }
 }
@@ -209,7 +219,8 @@ fun AlbumGenre(genre: String, modifier: Modifier) {
             fontWeight = FontWeight.Bold
         )
         Text(genre,
-            modifier = Modifier.testTag("generoAlbumsDetail"))
+            modifier = Modifier.testTag("albumGenreDetail")
+                .semantics { contentDescription = "albumGenreDetail" })
     }
 
 }
@@ -223,7 +234,8 @@ private fun AlbumTracks(tracks: List<Track>, modifier: Modifier = Modifier) {
         )
         tracks.forEachIndexed { index, track ->
             Text(text = "${index + 1}. ${track.name}",
-                modifier = Modifier.testTag("singAlbumsDetail"))
+                modifier = Modifier.testTag("albumSingDetail")
+                    .semantics { contentDescription = "albumSingDetail" })
         }
     }
 }
@@ -241,7 +253,8 @@ private fun AlbumReleaseDate(
         )
         val formattedDate = albumsViewModel.formatReleaseDate(releaseDate)
         Text(formattedDate,
-            modifier = Modifier.testTag("dateAlbumsDetail"))
+            modifier = Modifier.testTag("albumDateDetail")
+                .semantics { contentDescription = "albumDateDetail" })
     }
 }
 
@@ -285,7 +298,9 @@ private fun CommentSection(
             )
             Button(
                 onClick = { /* Implementar lógica de envío de comentario */ },
-                modifier = Modifier.align(Alignment.End).testTag("btnComentAlbumsDetail")
+                modifier = Modifier
+                    .align(Alignment.End)
+                    .testTag("btnComentAlbumsDetail")
             ) {
                 Text("Enviar",
                     modifier = Modifier.testTag("textBtnComentAlbumsDetail"))
@@ -315,7 +330,8 @@ private fun AlbumComments(comments: List<Comment>, modifier: Modifier = Modifier
         comments.forEachIndexed { index, comment ->
             Text(
                 text = "${index + 1}. ${comment.description}",
-                modifier = Modifier.padding(8.dp)
+                modifier = Modifier
+                    .padding(8.dp)
                     .testTag("commentAlbumsDetail")
             )
         }

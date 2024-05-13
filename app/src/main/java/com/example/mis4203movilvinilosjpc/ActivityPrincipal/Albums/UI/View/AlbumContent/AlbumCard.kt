@@ -19,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
@@ -36,7 +35,8 @@ import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.D
 fun AlbumCard(
     album: DataItemAlbums,
     onDetailsClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enableButton: Boolean
 ) {
     //creamos el elemento card
     Card(
@@ -53,7 +53,8 @@ fun AlbumCard(
             AlbumInformation(
                 album = album,
                 onDetailsClick = onDetailsClick,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                enableButton = enableButton
             )
             //
             AlbumCover(
@@ -72,7 +73,8 @@ fun AlbumCard(
 fun AlbumInformation(
     album: DataItemAlbums,
     onDetailsClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enableButton: Boolean
 ) {
     //organiza verticalmente
     Column(
@@ -102,7 +104,10 @@ fun AlbumInformation(
             )
         }
         //Boton para ver el detalle
-        Button(onClick = onDetailsClick,modifier = Modifier
+        Button(
+            enabled = enableButton,
+            onClick = onDetailsClick,
+            modifier = Modifier
             .testTag("btnAlbum")
             .semantics { contentDescription = "btnAlbum" })
         {

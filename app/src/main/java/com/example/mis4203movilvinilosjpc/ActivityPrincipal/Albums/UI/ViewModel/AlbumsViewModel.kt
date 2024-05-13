@@ -1,5 +1,6 @@
 package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,20 +24,22 @@ import javax.inject.Inject
 class AlbumsViewModel @Inject constructor(
     private val albumsListUseCase: AlbumsListUseCase,
     private val albumUseCase: AlbumUseCase
-):ViewModel() {
+) : ViewModel() {
 
     //variable que controla el estado de lo que se carga del listado de album, privada solo para el view model
     private val _albumsLoadingState =
         MutableStateFlow<LoadingState<List<DataItemAlbums>>>(LoadingState.Loading)
+
     //misma variable y a la que se engancha la vista
     val albumsLoadingState: StateFlow<LoadingState<List<DataItemAlbums>>> = _albumsLoadingState
-
 
     ////variable que controla el estado de lo que se carga del detalle de album, privada solo para el view model
     private val _albumDetalleLoadingState =
         MutableStateFlow<LoadingState<DataItemAlbums>>(LoadingState.Loading)
+
     //misma variable y a la que se engancha la vista detalle del album
-    val albumDetalleLoadingState: StateFlow<LoadingState<DataItemAlbums>> = _albumDetalleLoadingState
+    val albumDetalleLoadingState: StateFlow<LoadingState<DataItemAlbums>> =
+        _albumDetalleLoadingState
 
     //variable para editar comentarios
     private val _comentarios = MutableLiveData<String>()
@@ -45,6 +48,16 @@ class AlbumsViewModel @Inject constructor(
     //variable para editar comentarios
     private val _isKeyBoardVisible = MutableLiveData<Boolean>()
     val isKeyBoardVisible: LiveData<Boolean> = _isKeyBoardVisible
+
+    //Variable que controla estado del boton volver.
+    private val _enableButton =
+        MutableLiveData<Boolean>()
+    val enableButton: LiveData<Boolean> = _enableButton
+
+    //Variable que controla estado del boton volver.
+    private val _enableButtonBackStack =
+        MutableLiveData<Boolean>()
+    val enableButtonBackStack: LiveData<Boolean> = _enableButtonBackStack
 
     //funcion que se encarga de cargar el listado de album
     init {//inicializador
@@ -57,10 +70,16 @@ class AlbumsViewModel @Inject constructor(
             albumsListUseCase.invoke()//llamada a la api
                 .catch {//captura de excepciones
                     _albumsLoadingState.value =//controla el estado de la carga
+
                         LoadingState.Error(it.message ?: "Error al cargar los álbumes")//error
                 }
                 .collect { albums ->//controla el estado de la carga
-                    _albumsLoadingState.value = LoadingState.Success(albums)//carga exitosa
+                    if(albums.isEmpty()){
+
+                    }else{
+                        _albumsLoadingState.value = LoadingState.Success(albums)//carga exitosa
+                    }
+
                 }
         }
     }
@@ -87,17 +106,24 @@ class AlbumsViewModel @Inject constructor(
     }
 
     //clase cerrada para controlar el estado de la carga
-    sealed class LoadingState<out T> {//clase cerrada
+    sealed class LoadingState<out T> {
+        //clase cerrada
         object Loading : LoadingState<Nothing>()//carga
         data class Success<T>(val data: T) : LoadingState<T>()//carga exitosa
         data class Error(val errorMessage: String) : LoadingState<Nothing>()//error
     }
 
     //funcion que se encarga de redirigir a la vista de detalle del album
-    companion object {
-        fun onDetailsClick(albumId:String, navController: NavController) {
-            navController.navigate(AppScreem.DetalleAlbum.createRoute(albumId))
-        }
+
+    fun onDetailsClick(albumId: String, navController: NavController) {
+        _enableButtonBackStack.value = true
+        _enableButton.value = false
+        navController.navigate(AppScreem.DetalleAlbum.createRoute(albumId))
+    }
+
+    fun enableButton(){
+        _enableButtonBackStack.value= false
+        _enableButton.value= true
     }
 
     fun formatReleaseDate(releaseDate: String): String {

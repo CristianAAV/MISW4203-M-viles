@@ -2,6 +2,11 @@ package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Core.di
 
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.network.AlbumClient
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.network.AlbumsListClient
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Network.ArtistClient
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Network.ArtistLisClient
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Network.PrizeClient
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Network.CollectorClient
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Network.CollectorListCLient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +24,7 @@ class NetworkModule {
     @Provides
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://161.132.40.204:3000/")
+            .baseUrl("http://161.132.40.204/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -36,5 +41,32 @@ class NetworkModule {
         return retrofit.create(AlbumClient::class.java)
     }
 
+    //Inyectamos las interface de los endpoints list artist
+    @Provides
+    fun provideArtistListClient(retrofit: Retrofit): ArtistLisClient {
+        return retrofit.create(ArtistLisClient::class.java)
+    }
+    //Inyectamos las interface de los endpoints detalle artist
+    @Provides
+    fun providerArtistClient(retrofit: Retrofit): ArtistClient {
+        return retrofit.create(ArtistClient::class.java)
+    }
+
+    //Inyectamos las interface de los endpoints list collectors
+    @Provides
+    fun providerCollectorListClient(retrofit: Retrofit): CollectorListCLient {
+        return retrofit.create(CollectorListCLient::class.java)
+    }
+
+    //Inyectamos las interface de los endpoints collector detalle
+    @Provides
+    fun providerCollectorClient(retrofit: Retrofit): CollectorClient {
+        return retrofit.create(CollectorClient::class.java)
+    }
+
+    @Provides
+    fun providerPrizeClient(retrofit: Retrofit): PrizeClient {
+        return retrofit.create(PrizeClient::class.java)
+    }
 
 }
