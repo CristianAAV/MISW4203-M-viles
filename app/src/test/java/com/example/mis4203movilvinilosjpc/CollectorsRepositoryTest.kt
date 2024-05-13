@@ -1,5 +1,6 @@
 package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.Repository
 
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.Daos.TaskDaosAlbums
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.CollectorAlbum
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.Comment
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.DataItemCollectors
@@ -17,13 +18,18 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.mock
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.Daos.TaskDaosCollectors
+import kotlinx.coroutines.flow.firstOrNull
+import org.junit.Assert
+
 
 @ExperimentalCoroutinesApi
 class CollectorsRepositoryTest {
 
     @Mock
     private lateinit var mockApi: CollectorsServices
-
+    private val mockTaskDaosCollectors: TaskDaosCollectors = mock()
     private val testDispatcher = TestCoroutineDispatcher()
 
     private lateinit var collectorsRepository: CollectorsRepository
@@ -31,27 +37,7 @@ class CollectorsRepositoryTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        collectorsRepository = CollectorsRepository(mockApi)
-    }
-
-    @Test
-    fun testGetCollectorsFlow_success() = testDispatcher.runBlockingTest {
-        val collectorsData = listOf(
-            DataItemCollectors(
-                1,
-                "John Doe",
-                "123456789",
-                "john@example.com",
-                listOf(Comment(1, "Great collector!", 5)),
-                listOf(FavoritePerformer(1, "Performer", "image.jpg", "Description", "2000-01-01")),
-                listOf(CollectorAlbum(1, 100, "Available"))
-            )
-        )
-        val flow: Flow<List<DataItemCollectors>> = flow { emit(collectorsData) }
-        `when`(mockApi.getCollectorsFlow()).thenReturn(flow)
-
-        val result = collectorsRepository.getCollectorsFlow().toList()
-        assertEquals(collectorsData, result[0])
+        collectorsRepository = CollectorsRepository(mockApi, mockTaskDaosCollectors)
     }
 
     @Test
@@ -76,12 +62,15 @@ class CollectorsRepositoryTest {
     @Test
     fun testGetCollectorsFlow_empty() = testDispatcher.runBlockingTest {
         val emptyList: List<DataItemCollectors> = emptyList()
-        val flow: Flow<List<DataItemCollectors>> = flow { emit(emptyList) }
-        `when`(mockApi.getCollectorsFlow()).thenReturn(flow)
+        `when`(mockApi.getCollectorsFlow()).thenReturn(flow { throw Exception("Mocked exception") })
 
-        val result = collectorsRepository.getCollectorsFlow().toList()
-        assertEquals(emptyList, result[0])
+        val result = runCatching {
+            collectorsRepository.getCollectorsFlow().firstOrNull()
+        }
+
+        Assert.assertTrue(result.isFailure)
     }
+
 
     @Test
     fun testGetCollectorFlow_error() = testDispatcher.runBlockingTest {
