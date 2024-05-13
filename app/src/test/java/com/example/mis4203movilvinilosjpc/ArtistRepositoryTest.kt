@@ -1,9 +1,8 @@
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.Daos.TaskDaosAlbums
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.Repositorio.ArtistRepository
-import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataItemArtista
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataPrizesClient
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Network.ArtistService
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -11,27 +10,34 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.mock
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.Daos.TaskDaosArtists
+import org.mockito.kotlin.whenever
+import org.junit.Assert.assertTrue
+import java.io.IOException
 
 class ArtistRepositoryTest {
 
     @Mock
     private lateinit var mockArtistService: ArtistService
-
+    private val mockTaskDaosArtists: TaskDaosArtists = mock()
     private lateinit var artistRepository: ArtistRepository
 
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        artistRepository = ArtistRepository(mockArtistService)
+        artistRepository = ArtistRepository(mockArtistService, mockTaskDaosArtists)
     }
 
     @Test
-    fun `test getArtistFlow returns empty list`() = runBlocking {
-        `when`(mockArtistService.getArtistsFlow()).thenReturn(flowOf(emptyList()))
+    fun `test getArtistFlow throws exception`() = runBlocking {
+        whenever(mockTaskDaosArtists.getAlArtists()).thenReturn(flow { throw Exception("Mocked exception") })
 
-        val result = artistRepository.getArtistFlow().firstOrNull()
+        val result = runCatching {
+            artistRepository.getArtistFlow().firstOrNull()
+        }
 
-        assert(result.isNullOrEmpty())
+        assertTrue(result.isFailure)
     }
 
     @Test
