@@ -17,7 +17,8 @@ sealed class tabsItems(
 
     ) {
     object Album : tabsItems("Albums", {navController, extendendViewModel ->
-        AlbumContent(navController = navController, albumsViewModel = extendendViewModel.albumsViewModel)
+        AlbumContent(navController = navController, albumsViewModel = extendendViewModel.albumsViewModel,
+            createAlbumsViewModel = extendendViewModel.createAlbumsViewModel)
 
        // AlbumContent(albumsViewModel = viewModel(), navController = it)
 

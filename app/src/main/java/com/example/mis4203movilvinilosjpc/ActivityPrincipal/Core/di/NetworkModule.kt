@@ -2,6 +2,8 @@ package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Core.di
 
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.network.AlbumClient
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.network.AlbumsListClient
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.network.CommentsAlbums
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.network.CreateAlbums
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Network.ArtistClient
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Network.ArtistLisClient
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Network.PrizeClient
@@ -13,6 +15,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -64,9 +67,22 @@ class NetworkModule {
         return retrofit.create(CollectorClient::class.java)
     }
 
+    //Inyectamos las interface de los endpoints list prize
     @Provides
     fun providerPrizeClient(retrofit: Retrofit): PrizeClient {
         return retrofit.create(PrizeClient::class.java)
+    }
+
+    //Inyectamos las interface del endpoint post comments
+    @Provides
+    fun providerCommentsClient(retrofit: Retrofit): CommentsAlbums {
+        return retrofit.create(CommentsAlbums::class.java)
+    }
+
+    //Inyectamos la interface del enpoint CreacteAlbums
+    @Provides
+    fun providerCreateAlbums (retrofit: Retrofit):CreateAlbums {
+        return retrofit.create(CreateAlbums ::class.java)
     }
 
 }

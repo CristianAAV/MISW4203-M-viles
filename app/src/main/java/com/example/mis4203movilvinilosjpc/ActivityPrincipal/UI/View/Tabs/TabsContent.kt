@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.AlbumsViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.CreateAlbumsViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.ViewModel.ArtistaViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.UI.ViewModel.CollectorViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.ExtendedViewModel
@@ -27,6 +28,7 @@ fun TabsContent(
     albumsViewModel: AlbumsViewModel,
     artistaViewModel: ArtistaViewModel,
     collectorViewModel: CollectorViewModel,
+    createAlbumsViewModel: CreateAlbumsViewModel
 ) {
     // Create a list of tabs
     val tabs = listOf(
@@ -55,6 +57,7 @@ fun TabsContent(
             albumsViewModel = albumsViewModel,
             artistaViewModel = artistaViewModel,
             collectorViewModel = collectorViewModel,
+            createAlbumsViewModel = createAlbumsViewModel
         )
     }
 }
@@ -68,6 +71,7 @@ fun Contents(
     albumsViewModel: AlbumsViewModel,
     artistaViewModel: ArtistaViewModel,
     collectorViewModel: CollectorViewModel,
+    createAlbumsViewModel: CreateAlbumsViewModel
 ) {
     HorizontalPager(
         state = pagerState,
@@ -75,7 +79,7 @@ fun Contents(
     { page ->
         tabs[page].screem(
             navController,
-            ExtendedViewModel(albumsViewModel, artistaViewModel, collectorViewModel)
+            ExtendedViewModel(albumsViewModel, artistaViewModel, collectorViewModel,createAlbumsViewModel)
         )
 
     }

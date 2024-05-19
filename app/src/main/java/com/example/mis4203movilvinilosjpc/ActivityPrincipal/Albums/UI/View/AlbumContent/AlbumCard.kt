@@ -38,6 +38,8 @@ fun AlbumCard(
     modifier: Modifier = Modifier,
     enableButton: Boolean
 ) {
+
+
     //creamos el elemento card
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
