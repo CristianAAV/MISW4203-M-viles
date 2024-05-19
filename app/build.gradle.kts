@@ -98,6 +98,8 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
         // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
+    //material
+    implementation ("androidx.compose.material3:material3:1.2.1")
     //retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")

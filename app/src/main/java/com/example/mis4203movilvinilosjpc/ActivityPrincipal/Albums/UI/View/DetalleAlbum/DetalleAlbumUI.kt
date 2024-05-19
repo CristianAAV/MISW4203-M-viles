@@ -297,7 +297,7 @@ private fun CommentSection(
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             )
             Button(
-                onClick = { /* Implementar lógica de envío de comentario */ },
+                onClick = { albumsViewModel.addComment( album.id,comentario) },
                 modifier = Modifier
                     .align(Alignment.End)
                     .testTag("btnComentAlbumsDetail")

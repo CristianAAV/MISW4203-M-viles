@@ -75,7 +75,8 @@ fun DetalleCollectorUI(
                 },
                 title = {
                     Text(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .testTag("collectorTitleDetail")
                             .semantics { contentDescription = "collectorTitleDetail" },
                         textAlign = TextAlign.Center, text = "Detalle de Coleccionista"
@@ -96,7 +97,8 @@ fun DetalleCollectorUI(
                         fontWeight = FontWeight.Bold,
                         fontSize = 25.sp,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
                             .testTag("collectorNameDetail")
                             .semantics { contentDescription = "collectorNameDetail" }
                     )
@@ -120,7 +122,7 @@ fun DetalleCollectorUI(
                             collector =collector.favoritePerformers)
                     Spacer(modifier = Modifier.padding(4.dp))
                 //content collector comentarios
-                    Comments(collector =collector.comments)
+                    Comments(comentarios =collector.comments)
                     Spacer(modifier = Modifier.padding(4.dp))
                 //content collector albums
                     CollectorAlbumList(albums = albumsForCollectors ?: emptyList())
@@ -157,7 +159,9 @@ fun CollectorAlbumList(albums: List<DataItemAlbums>) {
                         .testTag("collectorAlbumText")
                         .semantics { contentDescription = "collectorAlbumText" }
                 )
-                Column(modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp)) {
+                Column(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 8.dp)) {
                     albums.forEachIndexed { index, dataItemAlbums ->
                         Text(text = "${index + 1}. ${dataItemAlbums.name}",fontSize = 15.sp,
                             modifier = Modifier
@@ -180,7 +184,7 @@ fun CollectorAlbumList(albums: List<DataItemAlbums>) {
 
 
     @Composable
-    fun Comments(collector: List<Comment>) {
+    fun Comments(comentarios: List<Comment>) {
         Card( elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
             modifier = Modifier
                 .fillMaxWidth()
@@ -200,16 +204,23 @@ fun CollectorAlbumList(albums: List<DataItemAlbums>) {
                         fontWeight = FontWeight.Bold,
                         fontSize = 20.sp
                     )
-                    Box(modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp)) {
-                        collector.forEachIndexed() { index, comments ->
-                            Text(
-                                text = "${index + 1}. ${comments.description}",
-                                fontSize = 15.sp,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .testTag("collectorCommentDetail")
-                                    .semantics { contentDescription = "collectorCommentDetail" }
-                            )
+                    Column(modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 8.dp)) {
+                        comentarios.forEachIndexed() { index, comments ->
+                              Column {
+                                  Text(
+                                      text = "${index + 1}. ${comments.description}",
+                                      fontSize = 15.sp,
+                                      modifier = Modifier
+                                          .fillMaxWidth()
+                                          .testTag("collectorCommentDetail")
+                                          .semantics { contentDescription = "collectorCommentDetail" }
+                                  )
+                              }
+
+
+
                         }
                     }
                 }
@@ -237,7 +248,9 @@ fun CollectorAlbumList(albums: List<DataItemAlbums>) {
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                     )
-                    Box(modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp)) {
+                    Box(modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 8.dp)) {
                         collector.forEachIndexed() { index, favoritePerformer ->
                             Text(
                                 text = "${index + 1}. ${favoritePerformer.name}",
@@ -272,7 +285,9 @@ fun CollectorAlbumList(albums: List<DataItemAlbums>) {
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
-                    Box(modifier = modifier.fillMaxSize().padding(horizontal = 8.dp)) {
+                    Box(modifier = modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 8.dp)) {
                         Text(
                             text = content,
                             modifier = modifier,

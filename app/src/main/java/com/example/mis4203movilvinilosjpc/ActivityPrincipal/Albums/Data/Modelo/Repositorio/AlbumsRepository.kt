@@ -7,6 +7,8 @@ import android.os.Build
 import androidx.compose.ui.platform.LocalContext
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.Daos.TaskDaosAlbums
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataItemAlbums
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataItemsCreacionAlbum
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataitemCommentsAlbum
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.network.AlbumsService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +21,6 @@ class AlbumsRepository @Inject constructor(
     private val taskDaosAlbums: TaskDaosAlbums,
     @ApplicationContext private val context: Context) {
 
-
    //fun getAlbumsFlow(): Flow<List<DataItemAlbums>> = api.getAlbumsFlow()
    fun getAlbumsFlow(): Flow<List<DataItemAlbums>> = flow {
        val cachedAlbums = taskDaosAlbums.getAlbums().firstOrNull() ?: emptyList()
@@ -30,9 +31,21 @@ class AlbumsRepository @Inject constructor(
            taskDaosAlbums.insertAlbums(apiAlbums)
            emit(apiAlbums)
        }
+       else{
+           //todo update cache
+       }
    }
 
     fun getAlbumFlow(albumId: String): Flow<DataItemAlbums> = api.getAlbumFlow(albumId)
+
+    //funcion para llamar al servicio que envía un post de comentario
+    suspend fun postCommentsAlbums(albumId: String,body : DataitemCommentsAlbum) {
+        api.postCommentsAlbums(albumId, body)
+    }
+
+    suspend fun postCreacionAlbums(body:DataItemsCreacionAlbum){
+        api.CreateAlbums(body)
+    }
 
        // Función para verificar si hay conexión a Internet
        fun isNetworkAvailable(): Boolean {

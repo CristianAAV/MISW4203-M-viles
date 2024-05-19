@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataItemAlbums
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataitemCommentsAlbum
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Domine.AlbumUseCase
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Domine.AlbumsListUseCase
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Domine.CommentsAlbumsUseCase
 import com.example.mis4203movilvinilosjpc.Navigation.AppScreem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +25,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AlbumsViewModel @Inject constructor(
     private val albumsListUseCase: AlbumsListUseCase,
-    private val albumUseCase: AlbumUseCase
+    private val albumUseCase: AlbumUseCase,
+    private val commentsAlbumsUseCase: CommentsAlbumsUseCase
 ) : ViewModel() {
 
     //variable que controla el estado de lo que se carga del listado de album, privada solo para el view model
@@ -100,6 +103,18 @@ class AlbumsViewModel @Inject constructor(
 
     }
 
+    // funcion para cargar los comentarios
+    fun postComentarios(id: String, body: String) {
+        viewModelScope.launch {
+            commentsAlbumsUseCase.invoke(id, DataitemCommentsAlbum(description = body))
+            _comentarios.value =""
+            getAlbum(id)
+
+        }
+    }
+
+
+
     //funcion que se encarga de editar el comentario
     fun onComentariosChange(it: String) {
         _comentarios.value = it
@@ -114,18 +129,19 @@ class AlbumsViewModel @Inject constructor(
     }
 
     //funcion que se encarga de redirigir a la vista de detalle del album
-
     fun onDetailsClick(albumId: String, navController: NavController) {
-        _enableButtonBackStack.value = true
-        _enableButton.value = false
+        _enableButtonBackStack.value = true //habilita el boton de volver del detalle
+        _enableButton.value = false//deshabilita el boton de volver del listado
         navController.navigate(AppScreem.DetalleAlbum.createRoute(albumId))
     }
 
+    //hablita o deshabilita el boton de volver
     fun enableButton(){
-        _enableButtonBackStack.value= false
-        _enableButton.value= true
+        _enableButtonBackStack.value= false //deshabilita el boton de volver del detalle
+        _enableButton.value= true //habilita el boton de volver del listado
     }
 
+    //funcion que se encarga de formatear la fecha
     fun formatReleaseDate(releaseDate: String): String {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
         val outputFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
@@ -133,12 +149,19 @@ class AlbumsViewModel @Inject constructor(
         return outputFormat.format(parsedDate)
     }
 
+    //funcion que se encarga de mostrar o ocultar el teclado
     fun showKeyboard() {
         _isKeyBoardVisible.value = true
     }
 
+    //funcion que se encarga de mostrar o ocultar el teclado
     fun hideKeyboard() {
         _isKeyBoardVisible.value = false
+    }
+
+    //funcion que se encarga de cargar el listado de album
+    fun addComment(id: String, comentario: String) {
+        postComentarios(id,comentario)
     }
 }
 

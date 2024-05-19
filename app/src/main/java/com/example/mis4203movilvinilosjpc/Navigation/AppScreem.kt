@@ -13,4 +13,5 @@ sealed class AppScreem (val route:String) {
     object DetalleColeccionista:AppScreem("DetalleColeccionista/{coleccionistaId}"){
         fun createRoute(coleccionistaId:String) = "DetalleColeccionista/$coleccionistaId"
     }
+    object AlbumCreate:AppScreem("AlbumCreate")
 }
