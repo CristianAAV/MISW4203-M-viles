@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataItemsCreacionAlbum
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Domine.AlbumsListUseCase
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Domine.CreacionAlbumsUseCase
 import com.example.mis4203movilvinilosjpc.Navigation.AppScreem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateAlbumsViewModel @Inject constructor(
-    private val creacionAlbumsUseCase: CreacionAlbumsUseCase) : ViewModel() {
+    private val creacionAlbumsUseCase: CreacionAlbumsUseCase,private val albumsListUseCase: AlbumsListUseCase
+) : ViewModel() {
 
 
     private val _nombreAlbum = MutableStateFlow("")
@@ -37,6 +39,12 @@ class CreateAlbumsViewModel @Inject constructor(
 
     private val _recordLabel = MutableStateFlow("")
     val recordLabel: StateFlow<String> = _recordLabel
+
+    // LiveData para notificar cuando un álbum es creado
+    private val _albumCreated = MutableLiveData<Boolean>()
+    val albumCreated: LiveData<Boolean> = _albumCreated
+
+
 
 
     //Variable que controla estado del boton volver.
@@ -76,6 +84,7 @@ class CreateAlbumsViewModel @Inject constructor(
         recordLabel: String,
         description: String,
     ) {
+
         _nombreAlbum.value = nombreAlbum
         _añoLanzamiento.value = año
         _descriptionAlbum.value = description
@@ -94,14 +103,29 @@ class CreateAlbumsViewModel @Inject constructor(
 
     }
 
-    fun onCreateAlbum() {
+    fun navegarPaginaPrincipal(navController: NavController){
+        navController.navigate(AppScreem.ActivityPrincipal.route )
+    }
+
+    fun onCreateAlbum(navController: NavController) {
         viewModelScope.launch {
             creacionAlbumsUseCase.invoke(DataItemsCreacionAlbum(
                 name=nombreAlbum.value,
                 description = descriptionAlbum.value,
                 genre = generoAlbum.value,
                 recordLabel = recordLabel.value))
+
+
         }
+
+        _albumCreated.value = true //carga exitosa
+        _nombreAlbum.value = ""
+        _añoLanzamiento.value = ""
+        _descriptionAlbum.value = ""
+        _artistaCreate.value = ""
+        _generoAlbum.value = ""
+        _recordLabel.value = ""
+        navegarPaginaPrincipal(navController)
     }
 
     fun isLoginEnabledCreateAlbum(
@@ -127,6 +151,9 @@ class CreateAlbumsViewModel @Inject constructor(
 
     }
 
+    fun resetAlbumCreatedFlag() {
+        _albumCreated.value = false
+    }
 
 
 }
