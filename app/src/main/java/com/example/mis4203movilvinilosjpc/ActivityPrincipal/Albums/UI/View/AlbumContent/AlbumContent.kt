@@ -37,8 +37,18 @@ fun AlbumContent(
     //variable para controlar el estado del estado de carga de la api, esta enganchada a viewModel
     val albumsLoadingState = albumsViewModel.albumsLoadingState.collectAsState()
 
+    //variable para controlar el estado del estado de creacion de la api, esta enganchada a viewModel
+    val albumCreated by createAlbumsViewModel.albumCreated.observeAsState()
+
+    // Recargar los álbumes cuando se crea un nuevo álbum
+    if (albumCreated == true) {
+        albumsViewModel.reloadAlbums()
+        createAlbumsViewModel.resetAlbumCreatedFlag() // Restablecer el indicador
+    }
+
     //variable para controlar el estado del boton.
     val enableButton by albumsViewModel.enableButton.observeAsState(true)
+
 
 
     //controlamos el estado de carga
@@ -99,6 +109,8 @@ fun AlbumContent(
 
             }
         }
+
+
 
 
     }

@@ -67,6 +67,12 @@ class AlbumsViewModel @Inject constructor(
         getAlbums()//llamada a la funcion
     }
 
+    fun reloadAlbums() {
+        getAlbums()//llamada a la funcion
+    }
+
+
+
     //funcion que se encarga de cargar el listado de album
     fun getAlbums() {
         viewModelScope.launch {//corutina
