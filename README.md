@@ -308,3 +308,10 @@ una vez realizado esto se inicia el dispositivo y se deja corriendo sin la aplic
 ```
 npx wdio
 ```
+## Ejecución de pruebas de reconocimiento - monkeys
+1. Generamos el apk, para ello nos dirijimos a la opcion "Build APK" del menu "Build"
+2. Nos dirijimos a la carpeta donde se genero el APK
+3. Ejecutamos los siguientes comandos desde una terminal:
+![monkeys](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142269475/9de21fcc-14eb-4408-956f-75d51ba6960c)
+
+   
