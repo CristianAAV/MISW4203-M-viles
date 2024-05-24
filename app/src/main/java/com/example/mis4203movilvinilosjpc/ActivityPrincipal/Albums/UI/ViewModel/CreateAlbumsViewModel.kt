@@ -115,7 +115,7 @@ class CreateAlbumsViewModel @Inject constructor(
             creacionAlbumsUseCase.invoke(
                 DataItemsCreacionAlbum(
                     name = nombreAlbum.value,
-                    // releaseDate = dateString,
+                    releaseDate = añoLanzamiento.value,
                     description = descriptionAlbum.value,
                     genre = generoAlbum.value,
                     recordLabel = recordLabel.value

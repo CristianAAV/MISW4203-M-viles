@@ -365,7 +365,7 @@ fun EditFechaLanzamiento(datos: String, textEdit: String, onCommentChange: (Stri
         DatePickerDialog(
             context,
             { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                val selectedDate = "$dayOfMonth/${month + 1}/$year"
+                val selectedDate = "${year}-${month + 1}-${dayOfMonth}"
                 onCommentChange(selectedDate)
                 showDatePicker = false
             },
