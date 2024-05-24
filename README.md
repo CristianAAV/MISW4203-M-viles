@@ -308,3 +308,27 @@ una vez realizado esto se inicia el dispositivo y se deja corriendo sin la aplic
 ```
 npx wdio
 ```
+## Ejecución de pruebas de reconocimiento - monkeys
+1. Generamos el apk, para ello nos dirijimos a la opcion "Build APK" del menu "Build"
+2. Nos dirijimos a la carpeta donde se genero el APK
+3. Ejecutamos los siguientes comandos desde una terminal:
+![monkeys](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142269475/9de21fcc-14eb-4408-956f-75d51ba6960c)
+
+## Ejecución de herramientas de accesibilidad - monkeys   
+Las pruebas de accesibilidad se llevaron a cabo en un equipo Samsung Galaxy A21s y utilizando el "Test de accesibilidad " como herramienta recomendada 
+
+1. Desde el "Play Store" instalar la aplicacion "Prueba de accesibilidad"
+
+![01](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142269475/706f7a1a-5fa8-4431-aff1-78ddcfc33a17)
+
+2. Dirigirse a los "Ajustes del telefono", y seleccionar la opcion de accesibilidad, y seleccionar "Aplicaciones Instaladas"
+
+![02](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142269475/93737779-5188-46c1-bcdf-4a291d5692e6)
+
+4. Activar la aplicacion "Prueba de accesibilidad"
+
+![04](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142269475/6722ad3b-f4e0-4858-b7bf-d033421716fb)
+
+5. Seguir las instrucciones para ejecutar las pruebas
+
+![05](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142269475/d7103ef6-8767-41b0-a29a-d729a2d1e9b6)
