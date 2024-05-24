@@ -34,8 +34,3 @@ interface CreateAlbums {
     @POST("albums")
     suspend fun createAlbums (@Body body:DataItemsCreacionAlbum)
 }
-
-interface UpdateListAlbums {
-    @PUT("albums")
-    suspend fun GetAlbums ()
-}

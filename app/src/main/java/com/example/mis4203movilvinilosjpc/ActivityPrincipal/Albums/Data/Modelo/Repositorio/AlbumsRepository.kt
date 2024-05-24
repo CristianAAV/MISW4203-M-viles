@@ -12,8 +12,10 @@ import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.D
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.network.AlbumsService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AlbumsRepository @Inject constructor(
@@ -23,15 +25,21 @@ class AlbumsRepository @Inject constructor(
 
    //fun getAlbumsFlow(): Flow<List<DataItemAlbums>> = api.getAlbumsFlow()
    fun getAlbumsFlow(): Flow<List<DataItemAlbums>> = flow {
+
+       val apiAlbums = api.getAlbumsFlow().firstOrNull() ?: emptyList()
+       taskDaosAlbums.insertAlbums(apiAlbums)
        val cachedAlbums = taskDaosAlbums.getAlbums().firstOrNull() ?: emptyList()
-       emit(cachedAlbums)
 
        if (cachedAlbums.isEmpty()) {
-           val apiAlbums = api.getAlbumsFlow().firstOrNull() ?: emptyList()
            taskDaosAlbums.insertAlbums(apiAlbums)
            emit(apiAlbums)
        }
        else{
+           emit(cachedAlbums)
+           val albumsFlow = taskDaosAlbums.getAlbums().map { albums ->
+               albums.toList()
+           }
+           emitAll(albumsFlow)
            //todo update cache
        }
    }

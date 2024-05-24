@@ -1,5 +1,7 @@
 package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.View.CrearAlbum
 
+import android.app.DatePickerDialog
+import android.widget.DatePicker
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -36,6 +39,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -44,6 +50,11 @@ import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.D
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataItemsGeneros
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.CreateAlbumsViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.ViewModel.ArtistaViewModel
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -115,14 +126,15 @@ fun AlbumCreate(
                         datos = "Nombre",
                         habilitadorEditrtext = true,
                         textEdit = nombreAlbum,
-                        listadoName = emptyList()
+                        listadoName = emptyList(),
+                        dataPicker = false
                     ) {
                         createAlbumsViewModel.onDatosChangeCreateAlbum(
                             nombreAlbum = it,
                             artista = artista,
                             año = añoLanzamiento,
                             genero = genero,
-                            recordLabel =recordLabel,
+                            recordLabel = recordLabel,
                             description = descripcion
                         )
                     }
@@ -132,16 +144,19 @@ fun AlbumCreate(
                         datos = "Artista",
                         habilitadorEditrtext = false,
                         textEdit = "",
-                        listadoName = listadoName
+                        listadoName = listadoName,
+                        dataPicker = false
 
-                    ) { createAlbumsViewModel.onDatosChangeCreateAlbum(
-                        nombreAlbum = nombreAlbum,
-                        artista = it,
-                        año = añoLanzamiento,
-                        genero = genero,
-                        recordLabel = recordLabel,
-                        description = descripcion
-                    ) }
+                    ) {
+                        createAlbumsViewModel.onDatosChangeCreateAlbum(
+                            nombreAlbum = nombreAlbum,
+                            artista = it,
+                            año = añoLanzamiento,
+                            genero = genero,
+                            recordLabel = recordLabel,
+                            description = descripcion
+                        )
+                    }
                 }
                 // item { cardItems() }
                 item {
@@ -150,15 +165,18 @@ fun AlbumCreate(
                         datos = "Genero",
                         habilitadorEditrtext = false,
                         textEdit = "",
-                        listadoName = listadoGenero.name
-                    ) {createAlbumsViewModel.onDatosChangeCreateAlbum(
-                        nombreAlbum = nombreAlbum,
-                        artista = artista,
-                        año = añoLanzamiento,
-                        genero = it,
-                        recordLabel = recordLabel,
-                        description = descripcion
-                    )}
+                        listadoName = listadoGenero.name,
+                        dataPicker = false
+                    ) {
+                        createAlbumsViewModel.onDatosChangeCreateAlbum(
+                            nombreAlbum = nombreAlbum,
+                            artista = artista,
+                            año = añoLanzamiento,
+                            genero = it,
+                            recordLabel = recordLabel,
+                            description = descripcion
+                        )
+                    }
                 }
 
                 item {
@@ -167,30 +185,31 @@ fun AlbumCreate(
                         datos = "Record Label",
                         habilitadorEditrtext = false,
                         textEdit = " ",
-                        listadoName = listadoRecordLabel.name
-                    ) {createAlbumsViewModel.onDatosChangeCreateAlbum(
-                        nombreAlbum = nombreAlbum,
-                        artista = artista,
-                        año = añoLanzamiento,
-                        genero = genero,
-                        recordLabel = it,
-                        description = descripcion
-                    )}
+                        listadoName = listadoRecordLabel.name,
+                        dataPicker = false
+                    ) {
+                        createAlbumsViewModel.onDatosChangeCreateAlbum(
+                            nombreAlbum = nombreAlbum,
+                            artista = artista,
+                            año = añoLanzamiento,
+                            genero = genero,
+                            recordLabel = it,
+                            description = descripcion
+                        )
+                    }
                 }
 
                 item {
-                    CardEditable(
+                    EditFechaLanzamiento(
                         datos = "Año de lanzamiento",
-                        habilitadorEditrtext = true,
-                        textEdit = añoLanzamiento,
-                        listadoName = emptyList()
+                        textEdit = añoLanzamiento
                     ) {
                         createAlbumsViewModel.onDatosChangeCreateAlbum(
                             nombreAlbum = nombreAlbum,
                             artista = artista,
                             año = it,
                             genero = genero,
-                            recordLabel =recordLabel,
+                            recordLabel = recordLabel,
                             description = descripcion
                         )
                     }
@@ -201,7 +220,8 @@ fun AlbumCreate(
                         datos = "Descripción",
                         habilitadorEditrtext = true,
                         textEdit = descripcion,
-                        listadoName = emptyList()
+                        listadoName = emptyList(),
+                        dataPicker = false
                     ) {
                         createAlbumsViewModel.onDatosChangeCreateAlbum(
                             nombreAlbum = nombreAlbum,
@@ -217,7 +237,7 @@ fun AlbumCreate(
             btnCrearAlbum(
                 modifier = Modifier.align(Alignment.BottomCenter),
                 createAlbumsViewModel,
-                isButtonEnable
+                isButtonEnable, navController
             )
         }
     }
@@ -225,33 +245,52 @@ fun AlbumCreate(
 
 @Composable
 fun CardEditable(
-    datos: String, //el nombre del editor de texto
-    habilitadorEditrtext: Boolean, //decide si es editor de texto libre o con dropdown
+    datos: String, // El nombre del editor de texto
+    habilitadorEditrtext: Boolean, // Decide si es editor de texto libre o con dropdown
     textEdit: String,
     listadoName: List<String>,
+    dataPicker: Boolean, // Indica si es un campo de fecha
     onCommentChange: (String) -> Unit,
 ) {
-    var expanded by remember { mutableStateOf(false) }//drowpdown menu
-    var selectText by remember { mutableStateOf("") }//seleccion de la lista de dopdownmenu
-    //var nombre by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) } // Dropdown menu
+    var selectText by remember { mutableStateOf("") } // Selección de la lista de dropdown menu
+    var showDatePicker by remember { mutableStateOf(false) } // Controla la visibilidad del DatePicker
+    val context = LocalContext.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
+
         if (habilitadorEditrtext) {
             OutlinedTextField(
                 value = textEdit,
                 onValueChange = { onCommentChange(it) },
                 label = { Text(datos) },
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                    }
+                ),
+                readOnly = dataPicker, // Si es un campo de fecha, hazlo de solo lectura
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-
+                    .padding(10.dp)
+                    .clickable {
+                        if (dataPicker) {
+                            showDatePicker = true
+                        }
+                    }
             )
-        } else { // editext con dropdown
+        } else { // EditText con dropdown
             Column(modifier = Modifier.fillMaxWidth()) {
-                OutlinedTextField(value = selectText,
+                OutlinedTextField(
+                    value = selectText,
                     onValueChange = { selectText = it },
                     label = { Text(datos) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
@@ -262,10 +301,10 @@ fun CardEditable(
                         .padding(10.dp)
                         .clickable { expanded = !expanded }
                 )
-                //drowpdown menu
+                // Dropdown menu
                 DropdownMenu(
-                    expanded = expanded, //true o false
-                    onDismissRequest = { expanded = false },// cierra el menu
+                    expanded = expanded, // True o false
+                    onDismissRequest = { expanded = false }, // Cierra el menú
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     listadoName.forEach { name ->
@@ -277,23 +316,77 @@ fun CardEditable(
                                 onCommentChange(name)
                             }
                         )
-
                     }
                 }
             }
         }
     }
+
     Spacer(modifier = Modifier.padding(vertical = 10.dp))
 }
+
+@Composable
+fun EditFechaLanzamiento(datos: String, textEdit: String, onCommentChange: (String) -> Unit) {
+
+    var showDatePicker by remember { mutableStateOf(false) } // Controla la visibilidad del DatePicker
+    val context = LocalContext.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+            showDatePicker = true
+        }
+    ) {
+        OutlinedTextField(
+            value = textEdit,
+            onValueChange = { onCommentChange(it) },
+            label = { Text(datos) },
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    keyboardController?.hide()
+                }
+            ),
+            enabled = false,
+            readOnly = true, // Si es un campo de fecha, hazlo de solo lectura
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+
+        )
+    }
+    if (showDatePicker) {
+        val calendar = Calendar.getInstance()
+        DatePickerDialog(
+            context,
+            { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+                val selectedDate = "$dayOfMonth/${month + 1}/$year"
+                onCommentChange(selectedDate)
+                showDatePicker = false
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+}
+
+
 
 @Composable
 fun btnCrearAlbum(
     modifier: Modifier,
     createAlbumsViewModel: CreateAlbumsViewModel,
     isButtonEnable: Boolean,
+    navController: NavController,
 ) {
     Button(
-        onClick = { createAlbumsViewModel.onCreateAlbum() },
+        onClick = { createAlbumsViewModel.onCreateAlbum(navController) },
         modifier = modifier.fillMaxWidth(),
         enabled = isButtonEnable
     ) {
