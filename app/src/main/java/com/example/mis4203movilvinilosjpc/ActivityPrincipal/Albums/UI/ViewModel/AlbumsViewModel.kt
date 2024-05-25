@@ -119,6 +119,8 @@ class AlbumsViewModel @Inject constructor(
             _comentarios.value =""
             getAlbum(id)
             hideKeyboard()
+            _comentarios.value =""
+            _enableButtonComments.value = false
 
         }
     }
@@ -148,7 +150,10 @@ class AlbumsViewModel @Inject constructor(
     fun onDetailsClick(albumId: String, navController: NavController) {
         _enableButtonBackStack.value = true //habilita el boton de volver del detalle
         _enableButton.value = false//deshabilita el boton de volver del listado
+        _comentarios.value =""
+        _enableButtonComments.value = false
         navController.navigate(AppScreem.DetalleAlbum.createRoute(albumId))
+
     }
 
     //hablita o deshabilita el boton de volver
@@ -178,6 +183,7 @@ class AlbumsViewModel @Inject constructor(
     //funcion que se encarga de cargar el listado de album
     fun addComment(id: String, comentario: String) {
         postComentarios(id,comentario)
+
     }
 }
 
