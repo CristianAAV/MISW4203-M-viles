@@ -29,18 +29,23 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataItemAlbums
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.AlbumsViewModel
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
@@ -67,8 +72,8 @@ fun DetalleAlbumUI(
     modifier: Modifier = Modifier,
     navController: NavController,
 ) {
-    val comentarios by albumsViewModel.comentarios.observeAsState("")
-    val isKeyBoardVisible by albumsViewModel.isKeyBoardVisible.observeAsState(false)
+    val comentarios by albumsViewModel.comentarios.collectAsState()
+    val isKeyBoardVisible by albumsViewModel.isKeyBoardVisible.collectAsState()
     val enableButtonBackStack by albumsViewModel.enableButtonBackStack.observeAsState(true)
 
     Scaffold(
@@ -204,7 +209,8 @@ private fun AlbumArtist(performers: List<Performer>, modifier: Modifier = Modifi
         )
         performers.forEach { performer ->
             Text(performer.name,
-                modifier = Modifier.testTag("albumPerformersDetail")
+                modifier = Modifier
+                    .testTag("albumPerformersDetail")
                     .semantics { contentDescription = "albumPerformersDetail" })
         }
     }
@@ -219,7 +225,8 @@ fun AlbumGenre(genre: String, modifier: Modifier) {
             fontWeight = FontWeight.Bold
         )
         Text(genre,
-            modifier = Modifier.testTag("albumGenreDetail")
+            modifier = Modifier
+                .testTag("albumGenreDetail")
                 .semantics { contentDescription = "albumGenreDetail" })
     }
 
@@ -234,7 +241,8 @@ private fun AlbumTracks(tracks: List<Track>, modifier: Modifier = Modifier) {
         )
         tracks.forEachIndexed { index, track ->
             Text(text = "${index + 1}. ${track.name}",
-                modifier = Modifier.testTag("albumSingDetail")
+                modifier = Modifier
+                    .testTag("albumSingDetail")
                     .semantics { contentDescription = "albumSingDetail" })
         }
     }
@@ -253,7 +261,8 @@ private fun AlbumReleaseDate(
         )
         val formattedDate = albumsViewModel.formatReleaseDate(releaseDate)
         Text(formattedDate,
-            modifier = Modifier.testTag("albumDateDetail")
+            modifier = Modifier
+                .testTag("albumDateDetail")
                 .semantics { contentDescription = "albumDateDetail" })
     }
 }
@@ -269,6 +278,8 @@ private fun CommentSection(
 ) {
     val view = LocalView.current
     val isKeyBoardVisebleState by rememberUpdatedState(newValue = isKeyBoardVisible)
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
 
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
@@ -290,9 +301,11 @@ private fun CommentSection(
                             albumsViewModel.hideKeyboard()
                         }
                     }
+                    .focusRequester(focusRequester)
                     .testTag("textFieldcomentAlbumsDetail"),
                 keyboardActions = KeyboardActions(onDone = {
                     albumsViewModel.hideKeyboard()
+                    focusManager.clearFocus() // Ocultar el teclado al presionar "Done"
                 }),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             )
@@ -307,15 +320,6 @@ private fun CommentSection(
             }
             AlbumComments(album.comments)
         }
-    }
-
-    //ocultar el teclado cuando se pierde el focus
-    SideEffect {
-        if(!isKeyBoardVisebleState){
-            val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
-        }
-//
     }
 }
 

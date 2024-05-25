@@ -3,13 +3,26 @@ package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.View.Deta
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.AlbumsViewModel
 
@@ -26,20 +39,79 @@ fun DetalleAlbum(
     val albumDetalleLoadingState = albumsViewModel.albumDetalleLoadingState.collectAsState()
 
     albumsViewModel.getAlbum(data ?: "100") // Llama a getAlbum() solo si data no es nulo
-
+    val enableButtonBackStack by albumsViewModel.enableButtonBackStack.observeAsState(true)
 
         //controlamos el estado de carga
         when (val loadingState = albumDetalleLoadingState.value) {
             //si ha fallado, mostramos un error
             is AlbumsViewModel.LoadingState.Error -> {
-                Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = loadingState.errorMessage)//error
+                Scaffold(
+                    topBar = {
+
+                        TopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                titleContentColor = MaterialTheme.colorScheme.primary,
+                            ),
+                            navigationIcon = {
+                                IconButton(
+                                    enabled = enableButtonBackStack,
+                                    onClick = { albumsViewModel.enableButton()
+                                        navController.popBackStack() }) {
+                                    Icon(
+                                        imageVector = Icons.Default.ArrowBack,
+                                        contentDescription = "Imagen del menu del drawer"
+                                    )
+                                }
+                            },
+                            title = {
+                                Text(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center, text = "Detalle del Album"
+                                )
+                            }
+                        )
+                    }
+                ) {
+                    Box(modifier = modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) {
+                        Text(text = loadingState.errorMessage)//error
+                    }
                 }
+
             }
             // si esta cargando, mostramos un indicador de carga
             AlbumsViewModel.LoadingState.Loading -> {
-                Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator() //indicador de carga
+                Scaffold(
+                    topBar = {
+
+                        TopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                titleContentColor = MaterialTheme.colorScheme.primary,
+                            ),
+                            navigationIcon = {
+                                IconButton(
+                                    enabled = enableButtonBackStack,
+                                    onClick = { albumsViewModel.enableButton()
+                                        navController.popBackStack() }) {
+                                    Icon(
+                                        imageVector = Icons.Default.ArrowBack,
+                                        contentDescription = "Imagen del menu del drawer"
+                                    )
+                                }
+                            },
+                            title = {
+                                Text(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Center, text = "Detalle del Album"
+                                )
+                            }
+                        )
+                    }
+                ) {
+                    Box(modifier = modifier.fillMaxSize().padding(it), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator() //indicador de carga
+                    }
                 }
             }
             //si funciona el cargue de la api bien, mostramos los datos
