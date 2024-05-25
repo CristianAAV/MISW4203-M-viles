@@ -137,5 +137,6 @@ fun AlbumCover(
             .border(1.dp, color = Color.Blue, shape = CircleShape)
             .padding(end = 4.dp)
             .testTag("imagenAlbum")
+            .semantics { contentDescription = "imagenAlbum" }
     )
 }

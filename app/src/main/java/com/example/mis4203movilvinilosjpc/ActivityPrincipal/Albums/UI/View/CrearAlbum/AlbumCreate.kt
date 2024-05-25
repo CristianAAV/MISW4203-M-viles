@@ -2,16 +2,19 @@ package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.View.Crea
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 
 import androidx.compose.foundation.layout.Column
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -39,8 +42,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -98,18 +106,29 @@ fun AlbumCreate(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             titleContentColor = MaterialTheme.colorScheme.primary,
         ), navigationIcon = {
-            IconButton(enabled = enableButtonBackStack, onClick = {
+            IconButton(
+                enabled = enableButtonBackStack,
+                onClick = {
                 createAlbumsViewModel.enableButton()
                 navController.popBackStack()
-            }) {
+                },
+                modifier = Modifier
+                    .testTag("btnBack")
+                    .semantics { contentDescription = "btnBack" }
+                ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Imagen del menu del drawer"
+                    contentDescription = "Imagen del menu del drawer",
+                    modifier = Modifier
+                        .testTag("btnLblBack")
+                        .semantics { contentDescription = "btnLblBack" }
                 )
             }
         }, title = {
             Text(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
+                    .testTag("titleCrearAlbum")
+                    .semantics { contentDescription = "titleCrearAlbum" },
                 textAlign = TextAlign.Center,
                 text = "Crear Album"
             )
@@ -127,7 +146,9 @@ fun AlbumCreate(
                         habilitadorEditrtext = true,
                         textEdit = nombreAlbum,
                         listadoName = emptyList(),
-                        dataPicker = false
+                        dataPicker = false,
+                        testTag = "fieldNombre",
+                        contentsDescription = "fieldNombre"
                     ) {
                         createAlbumsViewModel.onDatosChangeCreateAlbum(
                             nombreAlbum = it,
@@ -145,7 +166,9 @@ fun AlbumCreate(
                         habilitadorEditrtext = false,
                         textEdit = "",
                         listadoName = listadoName,
-                        dataPicker = false
+                        dataPicker = false,
+                        testTag = "fieldArtista",
+                        contentsDescription = "fieldArtista"
 
                     ) {
                         createAlbumsViewModel.onDatosChangeCreateAlbum(
@@ -166,7 +189,9 @@ fun AlbumCreate(
                         habilitadorEditrtext = false,
                         textEdit = "",
                         listadoName = listadoGenero.name,
-                        dataPicker = false
+                        dataPicker = false,
+                        testTag = "fieldGenero",
+                        contentsDescription = "fieldGenero"
                     ) {
                         createAlbumsViewModel.onDatosChangeCreateAlbum(
                             nombreAlbum = nombreAlbum,
@@ -186,7 +211,9 @@ fun AlbumCreate(
                         habilitadorEditrtext = false,
                         textEdit = " ",
                         listadoName = listadoRecordLabel.name,
-                        dataPicker = false
+                        dataPicker = false,
+                        testTag = "fieldRecord",
+                        contentsDescription = "fieldRecord"
                     ) {
                         createAlbumsViewModel.onDatosChangeCreateAlbum(
                             nombreAlbum = nombreAlbum,
@@ -202,7 +229,9 @@ fun AlbumCreate(
                 item {
                     EditFechaLanzamiento(
                         datos = "Año de lanzamiento",
-                        textEdit = añoLanzamiento
+                        textEdit = añoLanzamiento,
+                        testTag = "fieldRelease",
+                        contentsDescription = "fieldRelease"
                     ) {
                         createAlbumsViewModel.onDatosChangeCreateAlbum(
                             nombreAlbum = nombreAlbum,
@@ -221,7 +250,9 @@ fun AlbumCreate(
                         habilitadorEditrtext = true,
                         textEdit = descripcion,
                         listadoName = emptyList(),
-                        dataPicker = false
+                        dataPicker = false,
+                        testTag = "fieldDescripción",
+                        contentsDescription = "fieldDescripción"
                     ) {
                         createAlbumsViewModel.onDatosChangeCreateAlbum(
                             nombreAlbum = nombreAlbum,
@@ -235,7 +266,9 @@ fun AlbumCreate(
                 }
             }
             btnCrearAlbum(
-                modifier = Modifier.align(Alignment.BottomCenter),
+                modifier = Modifier.align(Alignment.BottomCenter)
+                    .testTag("btnCrearAlbum")
+                    .semantics { contentDescription = "btnCrearAlbum" },
                 createAlbumsViewModel,
                 isButtonEnable, navController
             )
@@ -250,6 +283,9 @@ fun CardEditable(
     textEdit: String,
     listadoName: List<String>,
     dataPicker: Boolean, // Indica si es un campo de fecha
+    modifier: Modifier = Modifier,
+    testTag: String = "",
+    contentsDescription: String = "",
     onCommentChange: (String) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) } // Dropdown menu
@@ -261,14 +297,22 @@ fun CardEditable(
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
         modifier = Modifier.fillMaxWidth()
+            .padding(8.dp)
+            .testTag(testTag)
+            .semantics { contentDescription = contentsDescription }
     ) {
 
         if (habilitadorEditrtext) {
             OutlinedTextField(
                 value = textEdit,
                 onValueChange = { onCommentChange(it) },
-                label = { Text(datos) },
-                keyboardOptions = KeyboardOptions.Default.copy(
+                label = { Text(datos,
+                    modifier = Modifier
+                        .testTag("lbl$testTag")
+                        .semantics { contentDescription = "lbl$contentsDescription" }
+                )},
+
+                    keyboardOptions = KeyboardOptions.Default.copy(
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Done
                 ),
@@ -286,13 +330,19 @@ fun CardEditable(
                             showDatePicker = true
                         }
                     }
+                    .testTag("$testTag")
+                    .semantics { contentDescription = "$contentsDescription" }
+
             )
         } else { // EditText con dropdown
             Column(modifier = Modifier.fillMaxWidth()) {
                 OutlinedTextField(
                     value = selectText,
                     onValueChange = { selectText = it },
-                    label = { Text(datos) },
+                    label = { Text(datos,
+                        modifier = Modifier
+                            .testTag("lbl$testTag")
+                            .semantics { contentDescription = "lbl$contentsDescription" }) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                     enabled = false,
                     readOnly = true,
@@ -326,7 +376,7 @@ fun CardEditable(
 }
 
 @Composable
-fun EditFechaLanzamiento(datos: String, textEdit: String, onCommentChange: (String) -> Unit) {
+fun EditFechaLanzamiento(datos: String, textEdit: String, testTag: String, contentsDescription: String, onCommentChange: (String) -> Unit) {
 
     var showDatePicker by remember { mutableStateOf(false) } // Controla la visibilidad del DatePicker
     val context = LocalContext.current
@@ -338,11 +388,16 @@ fun EditFechaLanzamiento(datos: String, textEdit: String, onCommentChange: (Stri
             .clickable {
             showDatePicker = true
         }
+            .testTag("fieldRelease")
+            .semantics { contentDescription = "fieldRelease" }
     ) {
         OutlinedTextField(
             value = textEdit,
             onValueChange = { onCommentChange(it) },
-            label = { Text(datos) },
+            label = { Text(datos,
+                modifier = Modifier
+                    .testTag("lbl$testTag")
+                    .semantics { contentDescription = "lbl$contentsDescription" }) },
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done
@@ -392,6 +447,9 @@ fun btnCrearAlbum(
         modifier = modifier.fillMaxWidth(),
         enabled = isButtonEnable
     ) {
-        Text(text = "Crear Album")
+        Text(text = "Crear Album",
+            modifier = Modifier
+                .testTag("txtCrearAlbum")
+                .semantics { contentDescription = "txtCrearAlbum" })
     }
 }

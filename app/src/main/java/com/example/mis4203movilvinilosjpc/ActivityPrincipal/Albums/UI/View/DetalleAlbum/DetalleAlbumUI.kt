@@ -88,7 +88,11 @@ fun DetalleAlbumUI(
                     IconButton(
                         enabled = enableButtonBackStack,
                         onClick = { albumsViewModel.enableButton()
-                            navController.popBackStack() }) {
+                            navController.popBackStack() },
+                        modifier = Modifier
+                            .testTag("buttonBack")
+                            .semantics { contentDescription = "buttonBack" }
+                    ) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Imagen del menu del drawer"
@@ -290,7 +294,10 @@ private fun CommentSection(
             OutlinedTextField(
                 value = comentario,
                 onValueChange = onComentarioChange,
-                label = { Text("Comentarios") },
+                label = { Text("Comentarios",
+                    modifier = Modifier
+                        .testTag("labelComentarios")
+                        .semantics { contentDescription = "labelComentarios" })},
                 modifier = Modifier
                     .padding(6.dp)
                     .fillMaxWidth()
