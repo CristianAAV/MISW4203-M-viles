@@ -57,6 +57,9 @@ class AlbumsViewModel @Inject constructor(
         MutableLiveData<Boolean>()
     val enableButton: LiveData<Boolean> = _enableButton
 
+    private val _enableButtonComments = MutableLiveData<Boolean>()
+    val enableButtonComments: LiveData<Boolean> = _enableButtonComments
+
     //Variable que controla estado del boton volver.
     private val _enableButtonBackStack =
         MutableLiveData<Boolean>()
@@ -116,6 +119,8 @@ class AlbumsViewModel @Inject constructor(
             _comentarios.value =""
             getAlbum(id)
             hideKeyboard()
+            _comentarios.value =""
+            _enableButtonComments.value = false
 
         }
     }
@@ -125,6 +130,12 @@ class AlbumsViewModel @Inject constructor(
     //funcion que se encarga de editar el comentario
     fun onComentariosChange(it: String) {
       _comentarios.value = it
+
+        if(it.isEmpty()){
+            _enableButtonComments.value = false
+        }else{
+            _enableButtonComments.value = true
+        }
     }
 
     //clase cerrada para controlar el estado de la carga
@@ -139,7 +150,10 @@ class AlbumsViewModel @Inject constructor(
     fun onDetailsClick(albumId: String, navController: NavController) {
         _enableButtonBackStack.value = true //habilita el boton de volver del detalle
         _enableButton.value = false//deshabilita el boton de volver del listado
+        _comentarios.value =""
+        _enableButtonComments.value = false
         navController.navigate(AppScreem.DetalleAlbum.createRoute(albumId))
+
     }
 
     //hablita o deshabilita el boton de volver
@@ -169,6 +183,7 @@ class AlbumsViewModel @Inject constructor(
     //funcion que se encarga de cargar el listado de album
     fun addComment(id: String, comentario: String) {
         postComentarios(id,comentario)
+
     }
 }
 
