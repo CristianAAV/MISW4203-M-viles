@@ -80,4 +80,20 @@ class AlbumsRepositoryTest {
         verify(mockAlbumsService, times(1)).CreateAlbums(newAlbum)
     }
 
+    @Test
+    fun `postCreacionAlbums should call AlbumsService CreateAlbums`() = runBlockingTest {
+        val newAlbum = DataItemsCreacionAlbum(
+            name = "New Album",
+            cover = "https://upload.wikimedia.org/wikipedia/commons/b/b6/12in-Vinyl-LP-Record-Angle.jpg",
+            releaseDate = "2023-05-20",
+            description = "A great new album",
+            genre = "Rock",
+            recordLabel = "Sony Music"
+        )
+
+        albumsRepository.postCreacionAlbums(newAlbum)
+
+        verify(mockAlbumsService, times(1)).CreateAlbums(newAlbum)
+    }
+
 }
