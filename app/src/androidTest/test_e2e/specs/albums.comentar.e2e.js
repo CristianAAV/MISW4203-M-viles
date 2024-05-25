@@ -34,6 +34,7 @@ describe("Test Comment Album", () => {
         assert.include(commetText, 'Comentarios');
     });
 
+
     it('should display the detail album write comment on the screen', async function() {
         const textcommentElement = await $('//android.view.View[@content-desc="textFieldcomentAlbumsDetail"]');
         await textcommentElement.click();
@@ -63,5 +64,7 @@ describe("Test Comment Album", () => {
         const commentAlbum = await commentsAlbum[1].getAttribute('text'); // Corrección aquí
         assert.isNotEmpty(commentAlbum, '2. Buen Album, me encanta'); // Cambio aquí
         assert.include(commentAlbum, '2. Buen Album, me encanta'); // Cambio aquí
+
     });
+
 });
