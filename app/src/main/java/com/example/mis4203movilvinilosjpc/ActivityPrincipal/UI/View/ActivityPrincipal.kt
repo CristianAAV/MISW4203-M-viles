@@ -21,7 +21,9 @@ import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.CreateAlbumsViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.ViewModel.ArtistaViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.UI.ViewModel.CollectorViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.getStringResource
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.UI.View.Tabs.TabsContent
+import com.example.mis4203movilvinilosjpc.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,7 +46,7 @@ fun ActivityPrincipal(
                 title = {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center, text = "Vinilos"
+                        textAlign = TextAlign.Center, text = getStringResource(stringResId = R.string.app_name)
                     )
 
                 }

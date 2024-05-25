@@ -27,6 +27,8 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.ViewModel.ArtistaViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.getStringResource
+import com.example.mis4203movilvinilosjpc.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,7 +75,7 @@ fun DetalleArtista(
                       },
                       title = {
                           Text(
-                              textAlign = TextAlign.Center, text = "Detalle de Artista",
+                              textAlign = TextAlign.Center, text = getStringResource(stringResId = R.string.detalleArtista),
                               modifier = Modifier.fillMaxWidth()
                                   .testTag("artistaDetalleTitle")
                                   .semantics { contentDescription = "artistaDetalleTitle" }

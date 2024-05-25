@@ -58,6 +58,8 @@ import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.D
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataItemsGeneros
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.CreateAlbumsViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.ViewModel.ArtistaViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.getStringResource
+import com.example.mis4203movilvinilosjpc.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -130,7 +132,7 @@ fun AlbumCreate(
                     .testTag("titleCrearAlbum")
                     .semantics { contentDescription = "titleCrearAlbum" },
                 textAlign = TextAlign.Center,
-                text = "Crear Album"
+                text = getStringResource(stringResId = R.string.CrearAlbum)
             )
         })
     }) {
@@ -142,7 +144,7 @@ fun AlbumCreate(
             ) {
                 item {
                     CardEditable(
-                        datos = "Nombre",
+                        datos = getStringResource(stringResId = R.string.name),
                         habilitadorEditrtext = true,
                         textEdit = nombreAlbum,
                         listadoName = emptyList(),
@@ -162,7 +164,7 @@ fun AlbumCreate(
                 }
                 item {
                     CardEditable(
-                        datos = "Artista",
+                        datos = getStringResource(stringResId = R.string.nameArtist),
                         habilitadorEditrtext = false,
                         textEdit = "",
                         listadoName = listadoName,
@@ -185,7 +187,7 @@ fun AlbumCreate(
                 item {
                     val listadoGenero = DataItemsGeneros(0)
                     CardEditable(
-                        datos = "Genero",
+                        datos = getStringResource(stringResId = R.string.nameGenero),
                         habilitadorEditrtext = false,
                         textEdit = "",
                         listadoName = listadoGenero.name,
@@ -207,7 +209,7 @@ fun AlbumCreate(
                 item {
                     val listadoRecordLabel = DataItemRecordlabel(0)
                     CardEditable(
-                        datos = "Record Label",
+                        datos = getStringResource(stringResId = R.string.recordLabel),
                         habilitadorEditrtext = false,
                         textEdit = " ",
                         listadoName = listadoRecordLabel.name,
@@ -228,7 +230,7 @@ fun AlbumCreate(
 
                 item {
                     EditFechaLanzamiento(
-                        datos = "Año de lanzamiento",
+                        datos = getStringResource(stringResId = R.string.FechaLanzamiento),
                         textEdit = añoLanzamiento,
                         testTag = "fieldRelease",
                         contentsDescription = "fieldRelease"
@@ -246,7 +248,7 @@ fun AlbumCreate(
                 }
                 item {
                     CardEditable(
-                        datos = "Descripción",
+                        datos = getStringResource(stringResId = R.string.descripcion),
                         habilitadorEditrtext = true,
                         textEdit = descripcion,
                         listadoName = emptyList(),
@@ -447,7 +449,7 @@ fun btnCrearAlbum(
         modifier = modifier.fillMaxWidth(),
         enabled = isButtonEnable
     ) {
-        Text(text = "Crear Album",
+        Text(text = getStringResource(stringResId = R.string.CrearAlbum),
             modifier = Modifier
                 .testTag("txtCrearAlbum")
                 .semantics { contentDescription = "txtCrearAlbum" })

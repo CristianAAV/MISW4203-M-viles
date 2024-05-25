@@ -28,12 +28,16 @@ class MainActivity : ComponentActivity() {
     private lateinit var artistaViewModel: ArtistaViewModel
     private lateinit var collectorViewModel: CollectorViewModel
     private lateinit var createAlbumsViewModel: CreateAlbumsViewModel
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         albumsViewModel = ViewModelProvider(this).get(AlbumsViewModel::class.java)
         artistaViewModel = ViewModelProvider(this).get(ArtistaViewModel::class.java)
         collectorViewModel = ViewModelProvider(this).get(CollectorViewModel::class.java)
         createAlbumsViewModel = ViewModelProvider(this).get(CreateAlbumsViewModel::class.java)
+
+        ResourceProvider.init(this)
         setContent {
             MIS4203MOVILVINILOSJPCTheme {
                 // A surface container using the 'background' color from the theme

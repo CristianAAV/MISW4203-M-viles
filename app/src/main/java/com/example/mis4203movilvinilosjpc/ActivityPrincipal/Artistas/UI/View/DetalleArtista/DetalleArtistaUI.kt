@@ -40,6 +40,8 @@ import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataItemArtista
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataPrizesClient
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.ViewModel.ArtistaViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.getStringResource
+import com.example.mis4203movilvinilosjpc.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,10 +80,11 @@ fun DetalleArtistaUI(
                 },
                 title = {
                     Text(
-                        textAlign = TextAlign.Center, text = "Detalle de Artista",
-                        modifier = Modifier.fillMaxWidth()
-                        .testTag("artistaDetalleTitle")
-                        .semantics { contentDescription = "artistaDetalleTitle" }
+                        textAlign = TextAlign.Center, text = getStringResource(stringResId = R.string.detalleArtista),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .testTag("artistaDetalleTitle")
+                            .semantics { contentDescription = "artistaDetalleTitle" }
                     )
                 }
             )
@@ -154,7 +157,8 @@ fun DescriptionArtista(description: String, modifier: Modifier) {
             Text(
                 text = description,
                 textAlign = TextAlign.Justify,
-                modifier = modifier.fillMaxWidth()
+                modifier = modifier
+                    .fillMaxWidth()
                     .testTag("artisDescription")
                     .semantics { contentDescription = "artisDescription" }
             )
@@ -177,10 +181,11 @@ fun AlbumsArtista(albums: List<Album>, modifier: Modifier) {
                 .padding(10.dp)
         ) {
             Text(
-                text = "Albums",
+                text = getStringResource(stringResId = R.string.nameAlbum) + ": ",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = modifier.fillMaxWidth()
+                modifier = modifier
+                    .fillMaxWidth()
                     .testTag("artisAlbumText")
                     .semantics { contentDescription = "artisAlbumText" }
             )
@@ -191,7 +196,8 @@ fun AlbumsArtista(albums: List<Album>, modifier: Modifier) {
                     Text(
                         text = "${index + 1}. ${album.name}",
                         fontSize = 15.sp,
-                        modifier = modifier.fillMaxWidth()
+                        modifier = modifier
+                            .fillMaxWidth()
                             .testTag("artisAlbumDetail")
                             .semantics { contentDescription = "artisAlbumDetail" }
                     )
@@ -220,10 +226,11 @@ fun performerPrizes(
                 .padding(10.dp)
         ) {
             Text(
-                text = "Premios",
+                text = getStringResource(stringResId = R.string.premios)+": ",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = modifier.fillMaxWidth()
+                modifier = modifier
+                    .fillMaxWidth()
                     .testTag("artisPriceText")
                     .semantics { contentDescription = "artisPriceText" }
             )
@@ -233,7 +240,8 @@ fun performerPrizes(
                 premiosDelArtista?.forEachIndexed { index, premio ->
                     Text(text = "${index + 1}. ${premio?.name}",
                         fontSize = 15.sp,
-                        modifier = modifier.fillMaxWidth()
+                        modifier = modifier
+                            .fillMaxWidth()
                             .testTag("artisPriceDetail")
                             .semantics { contentDescription = "artisPriceDetail" }
                     )

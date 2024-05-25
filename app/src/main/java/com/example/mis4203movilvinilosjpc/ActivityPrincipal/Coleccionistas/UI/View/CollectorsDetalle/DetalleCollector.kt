@@ -28,6 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.UI.ViewModel.CollectorViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.UI.ViewModel.LoadingState
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.getStringResource
+import com.example.mis4203movilvinilosjpc.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +76,7 @@ fun DetalleCollector(
                                     .fillMaxWidth()
                                     .testTag("collectorTitleDetail")
                                     .semantics { contentDescription = "collectorTitleDetail" },
-                                textAlign = TextAlign.Center, text = "Detalle de Coleccionista"
+                                textAlign = TextAlign.Center, text = getStringResource(stringResId = R.string.detalleCollectors)
                             )
                         }
                     )

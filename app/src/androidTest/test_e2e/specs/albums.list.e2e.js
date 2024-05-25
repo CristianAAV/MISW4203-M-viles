@@ -3,7 +3,7 @@
   describe("test albums list",() => {
     beforeEach (async () =>{
 
-    await $('//android.widget.TextView[@text="Albums"]').click();
+    await $('//android.widget.TextView[@text="Albumes"]').click();
     await browser.pause(2000); // Espera 1 segundo (1000 milisegundos)
 
     },{ shortCircuit: true });
@@ -35,8 +35,8 @@
               throw new Error('No se encontró el elemento del boton de detalles del album');
           }
           const buttonText = await buttonElement.getAttribute('text');
-          assert.isNotEmpty(buttonText, 'Detalles');
-          assert.include(buttonText, 'Detalles');
+          assert.isNotEmpty(buttonText, 'Ver detalle');
+          assert.include(buttonText, 'Ver detalle');
       });
 
       it('should display the thir album performer on the screen', async function() {

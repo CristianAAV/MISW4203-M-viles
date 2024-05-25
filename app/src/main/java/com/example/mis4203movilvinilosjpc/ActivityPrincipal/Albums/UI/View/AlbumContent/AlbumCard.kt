@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataItemAlbums
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.getStringResource
+import com.example.mis4203movilvinilosjpc.R
 
 //card para cada album
 @Composable
@@ -110,10 +112,10 @@ fun AlbumInformation(
             enabled = enableButton,
             onClick = onDetailsClick,
             modifier = Modifier
-            .testTag("btnAlbum")
-            .semantics { contentDescription = "btnAlbum" })
+                .testTag("btnAlbum")
+                .semantics { contentDescription = "btnAlbum" })
         {
-            Text(text = "Detalles",modifier = Modifier
+            Text(text = getStringResource(stringResId = R.string.verDetalle),modifier = Modifier
                 .testTag("btnTextAlbum")
                 .semantics { contentDescription = "btnTextAlbum" })
         }
