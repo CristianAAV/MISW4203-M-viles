@@ -50,7 +50,11 @@ import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.D
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.DataItemsGeneros
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.CreateAlbumsViewModel
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.UI.ViewModel.ArtistaViewModel
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -130,7 +134,7 @@ fun AlbumCreate(
                             artista = artista,
                             año = añoLanzamiento,
                             genero = genero,
-                            recordLabel =recordLabel,
+                            recordLabel = recordLabel,
                             description = descripcion
                         )
                     }
@@ -143,14 +147,16 @@ fun AlbumCreate(
                         listadoName = listadoName,
                         dataPicker = false
 
-                    ) { createAlbumsViewModel.onDatosChangeCreateAlbum(
-                        nombreAlbum = nombreAlbum,
-                        artista = it,
-                        año = añoLanzamiento,
-                        genero = genero,
-                        recordLabel = recordLabel,
-                        description = descripcion
-                    ) }
+                    ) {
+                        createAlbumsViewModel.onDatosChangeCreateAlbum(
+                            nombreAlbum = nombreAlbum,
+                            artista = it,
+                            año = añoLanzamiento,
+                            genero = genero,
+                            recordLabel = recordLabel,
+                            description = descripcion
+                        )
+                    }
                 }
                 // item { cardItems() }
                 item {
@@ -161,14 +167,16 @@ fun AlbumCreate(
                         textEdit = "",
                         listadoName = listadoGenero.name,
                         dataPicker = false
-                    ) {createAlbumsViewModel.onDatosChangeCreateAlbum(
-                        nombreAlbum = nombreAlbum,
-                        artista = artista,
-                        año = añoLanzamiento,
-                        genero = it,
-                        recordLabel = recordLabel,
-                        description = descripcion
-                    )}
+                    ) {
+                        createAlbumsViewModel.onDatosChangeCreateAlbum(
+                            nombreAlbum = nombreAlbum,
+                            artista = artista,
+                            año = añoLanzamiento,
+                            genero = it,
+                            recordLabel = recordLabel,
+                            description = descripcion
+                        )
+                    }
                 }
 
                 item {
@@ -179,30 +187,29 @@ fun AlbumCreate(
                         textEdit = " ",
                         listadoName = listadoRecordLabel.name,
                         dataPicker = false
-                    ) {createAlbumsViewModel.onDatosChangeCreateAlbum(
-                        nombreAlbum = nombreAlbum,
-                        artista = artista,
-                        año = añoLanzamiento,
-                        genero = genero,
-                        recordLabel = it,
-                        description = descripcion
-                    )}
+                    ) {
+                        createAlbumsViewModel.onDatosChangeCreateAlbum(
+                            nombreAlbum = nombreAlbum,
+                            artista = artista,
+                            año = añoLanzamiento,
+                            genero = genero,
+                            recordLabel = it,
+                            description = descripcion
+                        )
+                    }
                 }
 
                 item {
-                    CardEditable(
+                    EditFechaLanzamiento(
                         datos = "Año de lanzamiento",
-                        habilitadorEditrtext = true,
-                        textEdit = añoLanzamiento,
-                        listadoName = emptyList(),
-                        dataPicker = true
+                        textEdit = añoLanzamiento
                     ) {
                         createAlbumsViewModel.onDatosChangeCreateAlbum(
                             nombreAlbum = nombreAlbum,
                             artista = artista,
                             año = it,
                             genero = genero,
-                            recordLabel =recordLabel,
+                            recordLabel = recordLabel,
                             description = descripcion
                         )
                     }
@@ -230,7 +237,7 @@ fun AlbumCreate(
             btnCrearAlbum(
                 modifier = Modifier.align(Alignment.BottomCenter),
                 createAlbumsViewModel,
-                isButtonEnable,navController
+                isButtonEnable, navController
             )
         }
     }
@@ -243,7 +250,7 @@ fun CardEditable(
     textEdit: String,
     listadoName: List<String>,
     dataPicker: Boolean, // Indica si es un campo de fecha
-    onCommentChange: (String) -> Unit
+    onCommentChange: (String) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) } // Dropdown menu
     var selectText by remember { mutableStateOf("") } // Selección de la lista de dropdown menu
@@ -315,13 +322,50 @@ fun CardEditable(
         }
     }
 
-    // Date Picker Dialog
+    Spacer(modifier = Modifier.padding(vertical = 10.dp))
+}
+
+@Composable
+fun EditFechaLanzamiento(datos: String, textEdit: String, onCommentChange: (String) -> Unit) {
+
+    var showDatePicker by remember { mutableStateOf(false) } // Controla la visibilidad del DatePicker
+    val context = LocalContext.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+            showDatePicker = true
+        }
+    ) {
+        OutlinedTextField(
+            value = textEdit,
+            onValueChange = { onCommentChange(it) },
+            label = { Text(datos) },
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    keyboardController?.hide()
+                }
+            ),
+            enabled = false,
+            readOnly = true, // Si es un campo de fecha, hazlo de solo lectura
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+
+        )
+    }
     if (showDatePicker) {
         val calendar = Calendar.getInstance()
         DatePickerDialog(
             context,
             { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-                val selectedDate = "$dayOfMonth/${month + 1}/$year"
+                val selectedDate = "${year}-${month + 1}-${dayOfMonth}"
                 onCommentChange(selectedDate)
                 showDatePicker = false
             },
@@ -330,16 +374,16 @@ fun CardEditable(
             calendar.get(Calendar.DAY_OF_MONTH)
         ).show()
     }
-
-    Spacer(modifier = Modifier.padding(vertical = 10.dp))
 }
+
+
 
 @Composable
 fun btnCrearAlbum(
     modifier: Modifier,
     createAlbumsViewModel: CreateAlbumsViewModel,
     isButtonEnable: Boolean,
-    navController: NavController
+    navController: NavController,
 ) {
     Button(
         onClick = { createAlbumsViewModel.onCreateAlbum(navController) },
