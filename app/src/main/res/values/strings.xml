@@ -1,3 +1,27 @@
 <resources>
-    <string name="app_name">Vinylos-E18</string>
+    <string name="app_name">vinyls-E18</string>
+    <string name="nameAlbum">albums</string>
+    <string name="nameArtists">Artists</string>
+    <string name="nameCollectors">Collectors</string>
+    <string name="nameArtist">Artist</string>
+    <string name="nameGenero">Genre</string>
+    <string name="nameSongs">Songs</string>
+    <string name="FechaLanzamiento">Release date</string>
+    <string name="comentarios">Comments</string>
+    <string name="detalleAlbum">Album detail</string>
+    <string name="btnEnviar">Send</string>
+    <string name="verDetalle">see Detail</string>
+    <string name="detalleArtista">artist detail</string>
+    <string name="NumeroTelefono">phone number</string>
+    <string name="email">Email</string>
+    <string name="ArtistiaFavorito">Favorite artist</string>
+    <string name="detalleCollectors">collector detail</string>
+    <string name="name">name</string>
+    <string name="recordLabel">Record label</string>
+    <string name="descripcion">description</string>
+    <string name="CrearAlbum">create album</string>
+
+
+
 </resources>
+

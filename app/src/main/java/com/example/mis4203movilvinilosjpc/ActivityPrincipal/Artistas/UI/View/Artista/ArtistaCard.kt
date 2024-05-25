@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Artistas.Data.Modelo.DataItemArtista
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.getStringResource
+import com.example.mis4203movilvinilosjpc.R
 
 @Composable
 fun ArtistaCard(
@@ -55,9 +57,10 @@ fun ArtistaCard(
                 enabled = enableButton
                 )
             ArtisCover(artista.image,
-                modifier = Modifier.weight(0.3f)
+                modifier = Modifier
+                    .weight(0.3f)
                     .testTag("artistaCover")
-                    .semantics { contentDescription = "artistaCover"}
+                    .semantics { contentDescription = "artistaCover" }
             )
         }
     }
@@ -80,7 +83,7 @@ fun ArtistInformation(
            fontWeight = FontWeight.Bold,
            modifier = Modifier
                .testTag("artistaName")
-               .semantics { contentDescription = "artistaName"}
+               .semantics { contentDescription = "artistaName" }
        )
        //Btn para ver detalles
        Button(
@@ -89,9 +92,9 @@ fun ArtistInformation(
        )
        {
            Text(
-               text = "Ver Detalles",
+               text = getStringResource(stringResId = R.string.verDetalle),
                fontSize = 16.sp,
-               modifier =Modifier
+               modifier = Modifier
                    .testTag("artistaDetalle")
                    .semantics { contentDescription = "artistaDetalle" }
 
