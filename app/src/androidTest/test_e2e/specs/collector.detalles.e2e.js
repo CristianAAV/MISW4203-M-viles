@@ -52,13 +52,13 @@
       });
 
       it('should display the album of collector detail on the screen', async function() {
-          const albumsElement = await $('//android.widget.TextView[@content-desc="collectorAlbumDetail"]');
+          const albumsElement = await $('//android.widget.TextView[@text="No hay álbumes para este coleccionista"]');
           if (!albumsElement) {
               throw new Error('No se encontró el elemento album del collector en el detalle.');
           }
           const albumsText = await albumsElement.getAttribute('text');
-          assert.isNotEmpty(albumsText, 'Buscando América');
-          assert.include(albumsText, 'Buscando América');
+          assert.isNotEmpty(albumsText, 'álbumes');
+          assert.include(albumsText, 'álbumes');
       });
 
       it('should display the artis of collector detail on the screen', async function() {

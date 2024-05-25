@@ -46,8 +46,8 @@
               throw new Error('No se encontró el elemento del boton de detalles del collector');
           }
           const buttonText = await buttonElement.getAttribute('text');
-          assert.isNotEmpty(buttonText, 'Ver Detalle');
-          assert.include(buttonText, 'Ver Detalle');
+          assert.isNotEmpty(buttonText, 'Ver detalle');
+          assert.include(buttonText, 'Ver detalle');
       });
 
 

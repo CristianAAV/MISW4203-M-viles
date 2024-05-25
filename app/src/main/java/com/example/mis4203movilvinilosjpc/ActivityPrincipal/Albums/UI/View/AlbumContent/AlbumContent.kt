@@ -21,6 +21,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.AlbumsViewModel
@@ -124,7 +127,9 @@ fun floatingButton(
     function: () -> Unit,
 ) {
     FloatingActionButton(onClick = { function ()},
-        modifier = modifier.padding(16.dp)) {
+        modifier = modifier.padding(16.dp)
+            .testTag("btnCreateAlbum")
+            .semantics { contentDescription = "btnCreateAlbum" }) {
         Icon(imageVector = Icons.Default.Add, contentDescription = "Agregar Album")
 
     }

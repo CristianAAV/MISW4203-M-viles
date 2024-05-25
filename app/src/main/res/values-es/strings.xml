@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">vinilos-E18</string>
-    <string name="nameAlbum">albumes</string>
+    <string name="app_name">Vinilos-E18</string>
+    <string name="nameAlbum">Albumes</string>
     <string name="nameArtists">Artistas</string>
     <string name="nameCollectors">Coleccionistas</string>
     <string name="nameArtist">Artista</string>

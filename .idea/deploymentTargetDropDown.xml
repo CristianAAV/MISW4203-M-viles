@@ -13,12 +13,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\omrac\.android\avd\Pixel_8_Pro_API_30_2.avd" />
+                  <value value="C:\Users\MSI\.android\avd\Pixel_7_I.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-24T05:02:12.934711300Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-05-24T20:59:02.156419900Z" />
         </State>
       </entry>
     </value>

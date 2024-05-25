@@ -84,7 +84,11 @@ fun DetalleAlbumUI(
                     IconButton(
                         enabled = enableButtonBackStack,
                         onClick = { albumsViewModel.enableButton()
-                            navController.popBackStack() }) {
+                            navController.popBackStack() },
+                        modifier = Modifier
+                            .testTag("buttonBack")
+                            .semantics { contentDescription = "buttonBack" }
+                    ) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Imagen del menu del drawer"
@@ -288,7 +292,10 @@ private fun CommentSection(
             OutlinedTextField(
                 value = comentario,
                 onValueChange = onComentarioChange,
-                label = { Text(getStringResource(stringResId = R.string.comentarios)) },
+                label = { Text(getStringResource(stringResId = R.string.comentarios),
+                        modifier = Modifier
+                            .testTag("labelComentarios")
+                            .semantics { contentDescription = "labelComentarios" }) },
                 modifier = Modifier
                     .padding(6.dp)
                     .fillMaxWidth()
@@ -300,7 +307,8 @@ private fun CommentSection(
                         }
                     }
                     .focusRequester(focusRequester)
-                    .testTag("textFieldcomentAlbumsDetail"),
+                    .testTag("textFieldcomentAlbumsDetail")
+                    .semantics { contentDescription = "textFieldcomentAlbumsDetail" },
                 keyboardActions = KeyboardActions(onDone = {
                     albumsViewModel.hideKeyboard()
                     focusManager.clearFocus() // Ocultar el teclado al presionar "Done"
@@ -313,10 +321,14 @@ private fun CommentSection(
                 modifier = Modifier
                     .align(Alignment.End)
                     .testTag("btnComentAlbumsDetail")
+                    .semantics { contentDescription = "btnComentAlbumsDetail" }
             ) {
                 Text(
                     getStringResource(stringResId = R.string.btnEnviar),
-                    modifier = Modifier.testTag("textBtnComentAlbumsDetail"))
+                    modifier = Modifier
+                        .testTag("textBtnComentAlbumsDetail")
+                        .semantics { contentDescription = "textBtnComentAlbumsDetail" })
+
             }
             AlbumComments(album.comments)
         }
@@ -330,6 +342,8 @@ private fun AlbumComments(comments: List<Comment>, modifier: Modifier = Modifier
             text = getStringResource(stringResId = R.string.comentarios) + ": ",
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(8.dp)
+                .testTag("textLabelComment")
+                .semantics { contentDescription = "textLabelComment" }
         )
         comments.forEachIndexed { index, comment ->
             Text(
@@ -337,6 +351,7 @@ private fun AlbumComments(comments: List<Comment>, modifier: Modifier = Modifier
                 modifier = Modifier
                     .padding(8.dp)
                     .testTag("commentAlbumsDetail")
+                    .semantics { contentDescription = "commentAlbumsDetail" }
             )
         }
     }
