@@ -54,4 +54,13 @@ class AlbumsRepositoryTest {
         verify(mockAlbumsService, times(1)).postCommentsAlbums(albumId, comment)
     }
 
+    @Test
+    fun `postCommentsAlbums should pass correct data to service`() = runBlockingTest {
+        val albumId = "2"
+        val comment = DataitemCommentsAlbum(description = "Amazing sound quality!", rating = 4, collector = 2)
+
+        albumsRepository.postCommentsAlbums(albumId, comment)
+
+        verify(mockAlbumsService, times(1)).postCommentsAlbums(albumId, comment)
+        }
 }
