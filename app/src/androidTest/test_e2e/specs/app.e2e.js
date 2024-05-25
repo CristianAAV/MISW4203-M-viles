@@ -22,9 +22,9 @@
     });
 
     it('should display the app tab Albums on the screen', async function() {
-      const tabElement = await $('//android.widget.TextView[@text="Albums"]');
+      const tabElement = await $('//android.widget.TextView[@text="Albumes"]');
       if (!tabElement) {
-          throw new Error('No se encontró el elemento del tab de Albums de la app');
+          throw new Error('No se encontró el elemento del tab de Albumes de la app');
       }
       const tabText = await tabElement.getText();
       assert.isNotEmpty(tabText, 'Albumes');

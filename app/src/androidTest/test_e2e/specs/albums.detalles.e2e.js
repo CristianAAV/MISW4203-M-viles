@@ -9,17 +9,17 @@
 
       it('should navigate to details activity when "Detalles" button is clicked', async function() {
         await browser.pause(2000); // Espera 1 segundo (1000 milisegundos)
-        await $('//android.widget.TextView[@text="Albums"]').click();
+        await $('//android.widget.TextView[@text="Albumes"]').click();
         await browser.pause(2000); // Espera 1 segundo (1000 milisegundos)
-        const buttonElement = await $('//android.widget.TextView[@text="Detalles"]');
+        const buttonElement = await $('//android.widget.TextView[@text="Ver detalle"]');
         if (!buttonElement) {
-            throw new Error('No se encontró el botón "Detalles"');
+            throw new Error('No se encontró el botón "Ver detalle"');
         }
     await buttonElement.click();
         // Espera a que un elemento específico aparezca en la nueva actividad
-        await $('//android.widget.TextView[@text="Artista:"]').waitForExist({ timeout: 10000 });
+        await $('//android.widget.TextView[@text="Artista: "]').waitForExist({ timeout: 10000 });
         // Verificar que estamos en la nueva actividad
-        const newElement = await $('//android.widget.TextView[@text="Artista:"]');
+        const newElement = await $('//android.widget.TextView[@text="Artista: "]');
         assert.isTrue(await newElement.isExisting(), 'No se encontró el nuevo elemento, la nueva actividad no se cargó correctamente');
       });
 
@@ -53,16 +53,6 @@
           const genreText = await genreElement.getAttribute('text');
           assert.isNotEmpty(genreText, 'Salsa');
           assert.include(genreText, 'Salsa');
-      });
-
-      it('should display the detail album date on the screen', async function() {
-          const dateElement = await $('//android.widget.TextView[@content-desc="albumDateDetail"]');
-          if (!dateElement) {
-              throw new Error('No se encontró el elemento la cancion del detalle del álbum');
-          }
-          const dateText = await dateElement.getAttribute('text');
-          assert.isNotEmpty(dateText, '01 August 1984');
-          assert.include(dateText, '01 August 1984');
       });
 
       it('should display the detail album date on the screen', async function() {

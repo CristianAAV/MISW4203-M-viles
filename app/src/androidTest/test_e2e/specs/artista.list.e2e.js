@@ -45,8 +45,8 @@
               throw new Error('No se encontró el elemento del boton de detalles del artista');
           }
           const buttonText = await buttonElement.getAttribute('text');
-          assert.isNotEmpty(buttonText, 'Ver Detalles');
-          assert.include(buttonText, 'Ver Detalles');
+          assert.isNotEmpty(buttonText, 'Ver detalle');
+          assert.include(buttonText, 'Ver detalle');
       });
 
       it('should display the cover of artist on the screen', async function() {
