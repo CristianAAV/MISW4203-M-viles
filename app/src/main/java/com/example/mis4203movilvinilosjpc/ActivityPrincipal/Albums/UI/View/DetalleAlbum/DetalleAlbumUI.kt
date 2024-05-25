@@ -1,12 +1,9 @@
 package com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.View.DetalleAlbum
 
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,10 +25,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
@@ -75,6 +70,7 @@ fun DetalleAlbumUI(
     val comentarios by albumsViewModel.comentarios.collectAsState()
     val isKeyBoardVisible by albumsViewModel.isKeyBoardVisible.collectAsState()
     val enableButtonBackStack by albumsViewModel.enableButtonBackStack.observeAsState(true)
+    val enablebuttonComments by albumsViewModel.enableButtonComments.observeAsState(false)
 
     Scaffold(
         topBar = {
@@ -117,7 +113,8 @@ fun DetalleAlbumUI(
                     onComentarioChange ={albumsViewModel.onComentariosChange(it)},
                     isKeyBoardVisible = isKeyBoardVisible,
                     albumsViewModel = albumsViewModel,
-                    modifier = modifier
+                    modifier = modifier,
+                    enablebuttonComments = enablebuttonComments
                 )
             }
         }
@@ -275,6 +272,7 @@ private fun CommentSection(
     modifier: Modifier = Modifier,
     isKeyBoardVisible: Boolean = false,
     albumsViewModel: AlbumsViewModel,
+    enablebuttonComments: Boolean,
 ) {
     val view = LocalView.current
     val isKeyBoardVisebleState by rememberUpdatedState(newValue = isKeyBoardVisible)
@@ -311,6 +309,7 @@ private fun CommentSection(
             )
             Button(
                 onClick = { albumsViewModel.addComment( album.id,comentario) },
+                enabled = enablebuttonComments,
                 modifier = Modifier
                     .align(Alignment.End)
                     .testTag("btnComentAlbumsDetail")

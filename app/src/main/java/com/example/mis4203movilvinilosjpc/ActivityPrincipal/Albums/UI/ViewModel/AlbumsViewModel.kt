@@ -57,6 +57,9 @@ class AlbumsViewModel @Inject constructor(
         MutableLiveData<Boolean>()
     val enableButton: LiveData<Boolean> = _enableButton
 
+    private val _enableButtonComments = MutableLiveData<Boolean>()
+    val enableButtonComments: LiveData<Boolean> = _enableButtonComments
+
     //Variable que controla estado del boton volver.
     private val _enableButtonBackStack =
         MutableLiveData<Boolean>()
@@ -125,6 +128,12 @@ class AlbumsViewModel @Inject constructor(
     //funcion que se encarga de editar el comentario
     fun onComentariosChange(it: String) {
       _comentarios.value = it
+
+        if(it.isEmpty()){
+            _enableButtonComments.value = false
+        }else{
+            _enableButtonComments.value = true
+        }
     }
 
     //clase cerrada para controlar el estado de la carga
