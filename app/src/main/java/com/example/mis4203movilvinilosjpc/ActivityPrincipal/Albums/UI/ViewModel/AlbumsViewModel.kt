@@ -45,12 +45,12 @@ class AlbumsViewModel @Inject constructor(
         _albumDetalleLoadingState
 
     //variable para editar comentarios
-    private val _comentarios = MutableLiveData<String>()
-    val comentarios: LiveData<String> = _comentarios
+    private val _comentarios = MutableStateFlow<String>("")
+    val comentarios: StateFlow<String> = _comentarios
 
     //variable para editar comentarios
-    private val _isKeyBoardVisible = MutableLiveData<Boolean>()
-    val isKeyBoardVisible: LiveData<Boolean> = _isKeyBoardVisible
+    private val _isKeyBoardVisible = MutableStateFlow<Boolean>(false)
+    val isKeyBoardVisible: StateFlow<Boolean> = _isKeyBoardVisible
 
     //Variable que controla estado del boton volver.
     private val _enableButton =
@@ -115,6 +115,7 @@ class AlbumsViewModel @Inject constructor(
             commentsAlbumsUseCase.invoke(id, DataitemCommentsAlbum(description = body))
             _comentarios.value =""
             getAlbum(id)
+            hideKeyboard()
 
         }
     }
@@ -123,7 +124,7 @@ class AlbumsViewModel @Inject constructor(
 
     //funcion que se encarga de editar el comentario
     fun onComentariosChange(it: String) {
-        _comentarios.value = it
+      _comentarios.value = it
     }
 
     //clase cerrada para controlar el estado de la carga
