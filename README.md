@@ -332,3 +332,22 @@ Las pruebas de accesibilidad se llevaron a cabo en un equipo Samsung Galaxy A21s
 5. Seguir las instrucciones para ejecutar las pruebas
 
 ![05](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142269475/d7103ef6-8767-41b0-a29a-d729a2d1e9b6)
+
+
+## Implementacion de Internacionalizacion
+1. Para la implementacion de la internacionalizacion implementamos el patron Singleton, creando un objeto que nos permita acceder al "Contexto":
+
+![singleton_resource_provider](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142269475/c0426cba-90ba-4860-9696-098dbf359bb0)
+
+2. Inicializamos dicho objeto desde la clase Main de la aplicacion de modo que podamos acceder a ella desde otros objetos:
+
+![main_activity](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142269475/43825a5a-645e-4cfb-9c9b-16aea86ad54d)
+
+3. Creamos los recursos, tanto en español como ingles:
+
+![string_xml](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142269475/30b69acc-7b2f-4730-a209-e14cfad497e9)
+
+4. Accedemos a los recursos desde las clases que necesiten mostrar los textos en diferentes idiomas:
+
+![utilizacion](https://github.com/CristianAAV/MISW4203-Moviles-Vinilos/assets/142269475/f7d874b8-9f85-44ce-964d-11d7d4cbfec6)
+
