@@ -16,7 +16,7 @@ export const config = {
 
 
         platformName: "Android",
-        "appium:deviceName": "8 Pixel",
+        "appium:deviceName": "Pixel 8",
         "appium:platformVersion": "11",
         "appium:automationName": "UIAutomator2",
         "appium:app":androidAppPath,

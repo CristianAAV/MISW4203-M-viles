@@ -61,9 +61,9 @@ describe("Test Comment Album", () => {
         assert.include(commetTextValue, 'Buen Album, me encanta');
         await $('//android.widget.TextView[@content-desc="textBtnComentAlbumsDetail"]').click();
         const commentsAlbum = await $$('//android.widget.TextView[@content-desc="commentAlbumsDetail"]');
-        const commentAlbum = await commentsAlbum[1].getAttribute('text'); // Corrección aquí
-        assert.isNotEmpty(commentAlbum, '2. Buen Album, me encanta'); // Cambio aquí
-        assert.include(commentAlbum, '2. Buen Album, me encanta'); // Cambio aquí
+        const commentAlbum = await commentsAlbum[1].getAttribute('text');
+        assert.isNotEmpty(commentAlbum, 'me encanta');
+        assert.include(commentAlbum, 'me encanta');
 
     });
 

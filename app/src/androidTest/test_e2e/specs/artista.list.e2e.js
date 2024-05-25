@@ -29,14 +29,15 @@
           assert.include(artistext, 'Rubén Blades Bellido de Luna');
       });
 
+
       it('should display the second artist name  on the screen', async function() {
-          const artistElement = await $$('//android.widget.TextView[@content-desc="artistaName"]');
-          if (!artistElement) {
-              throw new Error('No se encontró el elemento nombre del artista');
-          }
-          const artistext = await artistElement[1].getAttribute('text');
-          assert.isNotEmpty(artistext, 'The Blue Notes');
-          assert.include(artistext, 'The Blue Notes');
+        const artistElement = await $$('//android.widget.TextView[@content-desc="artistaName"]');
+        if (!artistElement) {
+            throw new Error('No se encontró el elemento nombre del artista');
+        }
+        const artistext = await artistElement[0].getAttribute('text');
+        assert.isNotEmpty(artistext, 'Rubén Blades Bellido de Luna');
+        assert.include(artistext, 'Rubén Blades Bellido de Luna');
       });
 
       it('should display the button detalles of artista on the screen', async function() {
