@@ -63,4 +63,21 @@ class AlbumsRepositoryTest {
 
         verify(mockAlbumsService, times(1)).postCommentsAlbums(albumId, comment)
         }
+
+    @Test
+    fun `postCreacionAlbums should pass correct data to service`() = runBlockingTest {
+        val newAlbum = DataItemsCreacionAlbum(
+            name = "Another New Album",
+            cover = "https://example.com/cover.jpg",
+            releaseDate = "2024-01-01",
+            description = "An amazing new album",
+            genre = "Salsa",
+            recordLabel = "EMI"
+        )
+
+        albumsRepository.postCreacionAlbums(newAlbum)
+
+        verify(mockAlbumsService, times(1)).CreateAlbums(newAlbum)
+    }
+
 }
