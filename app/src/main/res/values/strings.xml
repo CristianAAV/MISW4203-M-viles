@@ -12,7 +12,7 @@
     <string name="btnEnviar">Send</string>
     <string name="verDetalle">see Detail</string>
     <string name="detalleArtista">artist detail</string>
-    <string name="NumeroTelefono">phone number</string>
+    <string name="numeroTelefono">phone number</string>
     <string name="email">Email</string>
     <string name="ArtistiaFavorito">Favorite artist</string>
     <string name="detalleCollectors">collector detail</string>
@@ -20,6 +20,7 @@
     <string name="recordLabel">Record label</string>
     <string name="descripcion">description</string>
     <string name="CrearAlbum">create album</string>
+    <string name="premios">Prize</string>
 
 
 

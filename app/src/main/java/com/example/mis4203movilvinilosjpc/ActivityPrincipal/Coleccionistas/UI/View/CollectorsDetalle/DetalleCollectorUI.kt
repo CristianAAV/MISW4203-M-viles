@@ -39,6 +39,8 @@ import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.DataItemCollectors
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.FavoritePerformer
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.UI.ViewModel.CollectorViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.getStringResource
+import com.example.mis4203movilvinilosjpc.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,7 +55,6 @@ fun DetalleCollectorUI(
     val albumsForCollectors = albumsCollectors[collector.id]
 
     val enableButtonBackStack by collectorViewModel.enableButtonBackStack.observeAsState(true)
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -79,12 +80,13 @@ fun DetalleCollectorUI(
                             .fillMaxWidth()
                             .testTag("collectorTitleDetail")
                             .semantics { contentDescription = "collectorTitleDetail" },
-                        textAlign = TextAlign.Center, text = "Detalle de Coleccionista"
+                        textAlign = TextAlign.Center, text = getStringResource(stringResId = R.string.detalleCollectors)
                     )
                 }
             )
         }
-    ) {it ->
+    ) {
+    it ->
 
         LazyColumn(modifier = Modifier
             .fillMaxWidth()
@@ -106,14 +108,14 @@ fun DetalleCollectorUI(
                     Spacer(modifier = Modifier.padding(4.dp))
                 //content collector telefono
                     DatosWhitTitleContent(
-                        title = "Numero de telefono" ,
+                        title = getStringResource(stringResId = R.string.numeroTelefono),
                         content =collector.telephone,
                         modifier = Modifier
                             .testTag("collectorNumberDetail")
                             .semantics { contentDescription = "collectorNumberDetail" })
                     Spacer(modifier = Modifier.padding(4.dp))
                 //content collector email
-                    DatosWhitTitleContent(title = "Email" , content =collector.email,modifier = Modifier
+                    DatosWhitTitleContent(title = getStringResource(stringResId = R.string.email) , content =collector.email,modifier = Modifier
                         .testTag("collectorEmailDetail")
                         .semantics { contentDescription = "collectorEmailDetail" })
                     Spacer(modifier = Modifier.padding(4.dp))
@@ -151,7 +153,7 @@ fun CollectorAlbumList(albums: List<DataItemAlbums>) {
                     .padding(5.dp)
             ) {
                 Text(
-                    text = "Albunes de coleccionista",
+                    text = getStringResource(stringResId = R.string.nameAlbum) + ": ",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
@@ -196,7 +198,7 @@ fun CollectorAlbumList(albums: List<DataItemAlbums>) {
                         .padding(5.dp)
                 ) {
                     Text(
-                        text = "Comentarios",
+                        text = getStringResource(stringResId = R.string.comentarios)    + ": ",
                         modifier = Modifier
                             .fillMaxWidth()
                             .testTag("collectorCommentText")
@@ -215,7 +217,9 @@ fun CollectorAlbumList(albums: List<DataItemAlbums>) {
                                       modifier = Modifier
                                           .fillMaxWidth()
                                           .testTag("collectorCommentDetail")
-                                          .semantics { contentDescription = "collectorCommentDetail" }
+                                          .semantics {
+                                              contentDescription = "collectorCommentDetail"
+                                          }
                                   )
                               }
 
@@ -241,7 +245,7 @@ fun CollectorAlbumList(albums: List<DataItemAlbums>) {
                         .padding(5.dp)
                 )  {
                     Text(
-                        text = "Artistas favoritos",
+                        text = getStringResource(stringResId = R.string.ArtistiaFavorito) + ": ",
                         modifier = Modifier
                             .testTag("collectorArtistText")
                             .semantics { contentDescription = "collectorArtistText" },

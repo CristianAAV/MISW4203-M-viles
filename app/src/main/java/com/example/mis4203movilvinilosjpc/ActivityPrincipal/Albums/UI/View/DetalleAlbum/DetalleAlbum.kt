@@ -25,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.UI.ViewModel.AlbumsViewModel
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.getStringResource
+import com.example.mis4203movilvinilosjpc.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,7 +69,7 @@ fun DetalleAlbum(
                             title = {
                                 Text(
                                     modifier = Modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Center, text = "Detalle del Album"
+                                    textAlign = TextAlign.Center, text = getStringResource(R.string.detalleAlbum)
                                 )
                             }
                         )
@@ -103,7 +105,7 @@ fun DetalleAlbum(
                             title = {
                                 Text(
                                     modifier = Modifier.fillMaxWidth(),
-                                    textAlign = TextAlign.Center, text = "Detalle del Album"
+                                    textAlign = TextAlign.Center, text = getStringResource(R.string.detalleAlbum)
                                 )
                             }
                         )
