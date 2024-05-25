@@ -60,8 +60,8 @@ import coil.compose.AsyncImage
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.Comment
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.Performer
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Albums.Data.Modelo.Track
-
-
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.getStringResource
+import com.example.mis4203movilvinilosjpc.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -98,7 +98,7 @@ fun DetalleAlbumUI(
                 title = {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center, text = "Detalle del Album"
+                        textAlign = TextAlign.Center, text = getStringResource(R.string.detalleAlbum)
                     )
                 }
             )
@@ -203,7 +203,7 @@ private fun AlbumArtist(performers: List<Performer>, modifier: Modifier = Modifi
 
     Row(modifier = modifier.padding(8.dp)) {
         Text(
-            text = "Artista:",
+            text = getStringResource(stringResId = R.string.nameArtist) + ": ",
             fontWeight = FontWeight.Bold
 
         )
@@ -221,7 +221,7 @@ fun AlbumGenre(genre: String, modifier: Modifier) {
 
     Row(modifier = modifier.padding(8.dp)) {
         Text(
-            text = "Género:",
+            text = getStringResource(stringResId = R.string.nameGenero ) + ": ",
             fontWeight = FontWeight.Bold
         )
         Text(genre,
@@ -236,7 +236,7 @@ fun AlbumGenre(genre: String, modifier: Modifier) {
 private fun AlbumTracks(tracks: List<Track>, modifier: Modifier = Modifier) {
     Column(modifier = modifier.padding(8.dp)) {
         Text(
-            text = "Canciones:",
+            text = getStringResource(stringResId = R.string.nameSongs) + ": ",
             fontWeight = FontWeight.Bold
         )
         tracks.forEachIndexed { index, track ->
@@ -256,7 +256,7 @@ private fun AlbumReleaseDate(
 ) {
     Row(modifier = modifier.padding(8.dp)) {
         Text(
-            text = "Fecha de lanzamiento:",
+            text = getStringResource(stringResId = R.string.FechaLanzamiento) + ": ",
             fontWeight = FontWeight.Bold
         )
         val formattedDate = albumsViewModel.formatReleaseDate(releaseDate)
@@ -290,7 +290,7 @@ private fun CommentSection(
             OutlinedTextField(
                 value = comentario,
                 onValueChange = onComentarioChange,
-                label = { Text("Comentarios") },
+                label = { Text(getStringResource(stringResId = R.string.comentarios)) },
                 modifier = Modifier
                     .padding(6.dp)
                     .fillMaxWidth()
@@ -315,7 +315,8 @@ private fun CommentSection(
                     .align(Alignment.End)
                     .testTag("btnComentAlbumsDetail")
             ) {
-                Text("Enviar",
+                Text(
+                    getStringResource(stringResId = R.string.btnEnviar),
                     modifier = Modifier.testTag("textBtnComentAlbumsDetail"))
             }
             AlbumComments(album.comments)
@@ -327,7 +328,7 @@ private fun CommentSection(
 private fun AlbumComments(comments: List<Comment>, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Text(
-            text = "Comentarios:",
+            text = getStringResource(stringResId = R.string.comentarios) + ": ",
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(8.dp)
         )

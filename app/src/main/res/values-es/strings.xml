@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">vinilos-E18</string>
+    <string name="nameAlbum">albumes</string>
+    <string name="nameArtists">Artistas</string>
+    <string name="nameCollectors">Coleccionistas</string>
+    <string name="nameArtist">Artista</string>
+    <string name="nameGenero">Genero</string>
+    <string name="nameSongs">Canciones</string>
+    <string name="FechaLanzamiento">Fecha de lanzamiento</string>
+    <string name="comentarios">Comentarios</string>
+    <string name="detalleAlbum">Detalle de album</string>
+    <string name="btnEnviar">Enviar</string>
+    <string name="verDetalle">Ver detalle</string>
+    <string name="detalleArtista">Detalle de Artista</string>
+    <string name="numeroTelefono">Numero de teléfono</string>
+    <string name="email">Correo electrónico</string>
+    <string name="ArtistiaFavorito">Artista Favorito</string>
+    <string name="detalleCollectors">Detalle coleccionista</string>
+    <string name="name">Nombre</string>
+    <string name="recordLabel">Etiqueta de registro</string>
+    <string name="descripcion">descripción</string>
+    <string name="CrearAlbum">Crear album</string>
+    <string name="premios">Premios</string>
+
+</resources>

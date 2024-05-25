@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Coleccionistas.Data.Modelo.DataItemCollectors
+import com.example.mis4203movilvinilosjpc.ActivityPrincipal.Data.Models.getStringResource
+import com.example.mis4203movilvinilosjpc.R
 
 @Composable
 fun CollectorCard(
@@ -49,7 +51,8 @@ fun CollectorCard(
                     text = collector.name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.0.sp,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .testTag("collectorName")
                         .semantics { contentDescription = "collectorName" }
                 )
@@ -58,7 +61,7 @@ fun CollectorCard(
                     enabled = enableButton,
                     onClick = { onClickDetalleCollector() }) {
                     Text(
-                        text = "Ver Detalle",
+                        text = getStringResource(stringResId = R.string.verDetalle),
                         fontSize = 16.0.sp,
                         modifier = Modifier
                             .testTag("collectorButtonDetail")
