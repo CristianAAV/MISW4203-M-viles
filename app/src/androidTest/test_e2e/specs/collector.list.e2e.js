@@ -30,14 +30,14 @@
 
       });
 
-      it('should display the thir Collector Name on the list screen', async function() {
+      it('should display the secund Collector Name on the list screen', async function() {
           const nameElement = await $$('//android.widget.TextView[@content-desc="collectorName"]');
           if (!nameElement) {
               throw new Error('No se encontró el elemento del nombre del colector');
           }
-          const nameText = await nameElement[2].getAttribute('text');
-          assert.isNotEmpty(nameText, 'Lucas Davis');
-          assert.include(nameText, 'Lucas Davis');
+          const nameText = await nameElement[1].getAttribute('text');
+          assert.isNotEmpty(nameText, 'Jaime Monsalve');
+          assert.include(nameText, 'Jaime Monsalve');
 
       });
       it('should display the button detalles of collector on the screen', async function() {
