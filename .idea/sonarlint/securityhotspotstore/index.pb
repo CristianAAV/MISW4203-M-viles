@@ -21,3 +21,11 @@ xapp/src/main/java/com/example/mis4203movilvinilosjpc/ActivityPrincipal/Coleccio
 kapp/src/main/java/com/example/mis4203movilvinilosjpc/ActivityPrincipal/Albums/Data/network/AlbumsService.kt,b/b/bb19451f2e28bbbf4fc7ebd6351d5662d23f0019
 õ
 kapp/src/main/java/com/example/mis4203movilvinilosjpc/ActivityPrincipal/Albums/Data/Modelo/DataItemAlbums.kt,8/a/8a2d3149da74f355eb1d936c1f1834572945de21
+è
+_app/src/main/java/com/example/mis4203movilvinilosjpc/ActivityPrincipal/Core/di/NetworkModule.kt,d/2/d2ea2fa0591b1d3deb6378cc765b8c9b334c601a
+¢
+rapp/src/main/java/com/example/mis4203movilvinilosjpc/ActivityPrincipal/Albums/Data/Modelo/DataitemCommentsAlbum.kt,5/f/5f4e50d320b5192d82572e967387f23753658a4a
+°
+qapp/src/main/java/com/example/mis4203movilvinilosjpc/ActivityPrincipal/Albums/Data/Modelo/DataItemCreateAlbums.kt,4/c/4cadc85a494e1dc7cdde5eff9dc8efc050ef0fad
+û
+napp/src/main/java/com/example/mis4203movilvinilosjpc/ActivityPrincipal/Albums/Data/network/AlbumsListClient.kt,2/c/2c1e541a9986f85fc0884815e193577116da2872
